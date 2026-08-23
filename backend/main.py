@@ -20,12 +20,12 @@ load_dotenv()
 DATA_FILE = Path(__file__).parent / "data" / "grievances.json"
 MAX_COMPLAINT_LENGTH = 3000
 DUPLICATE_THRESHOLD = 0.35
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "openrouter/free")
 ALLOWED_ORIGINS = [
-    origin.strip()
+    origin.strip().rstrip("/")
     for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
-    if origin.strip()
+    if origin.strip() and origin.strip() != "*"
 ]
 
 

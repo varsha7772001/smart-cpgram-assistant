@@ -9,4 +9,11 @@ if (!supabaseUrl || !supabasePublishableKey) {
   );
 }
 
+try {
+  const parsedUrl = new URL(supabaseUrl);
+  if (parsedUrl.protocol !== "https:") throw new Error();
+} catch {
+  throw new Error("VITE_SUPABASE_URL must be a valid HTTPS URL.");
+}
+
 export const supabase = createClient(supabaseUrl, supabasePublishableKey);

@@ -1,4 +1,17 @@
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
+
+if (!configuredApiBaseUrl) {
+  throw new Error("Missing VITE_API_BASE_URL configuration.");
+}
+
+try {
+  const parsedUrl = new URL(configuredApiBaseUrl);
+  if (!['http:', 'https:'].includes(parsedUrl.protocol)) throw new Error();
+} catch {
+  throw new Error("VITE_API_BASE_URL must be a valid HTTP(S) origin.");
+}
+
+export const API_BASE_URL = configuredApiBaseUrl.replace(/\/+$/, "");
 
 export async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, options);
