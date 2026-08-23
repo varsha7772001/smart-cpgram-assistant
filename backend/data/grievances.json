@@ -1,0 +1,1752 @@
+[
+  {
+    "grievance_id":"MOCK-2026-00001",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 6 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-02T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00002",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 6 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-02T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00003",
+    "user_id":"DEMO029",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 7 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-03T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00004",
+    "user_id":"DEMO029",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 7 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-03T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00005",
+    "user_id":"DEMO029",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 7 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-03T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00006",
+    "user_id":"DEMO005",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"My eligible unclaimed dividend refund has not been received. I request the concerned authority to verify the claim and process the refund.",
+    "submitted_at":"2026-06-04T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00007",
+    "user_id":"DEMO005",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"My eligible unclaimed dividend refund has not been received. I request the concerned authority to verify the claim and process the refund.",
+    "submitted_at":"2026-06-04T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00008",
+    "user_id":"DEMO027",
+    "org_code":"MSHPG",
+    "category_v7":26366,
+    "category_path":"Shipping > Ports related > Mechanical Engineering related ",
+    "complaint":"I am facing an issue related to Mechanical Engineering related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-05T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00009",
+    "user_id":"DEMO027",
+    "org_code":"MSHPG",
+    "category_v7":26366,
+    "category_path":"Shipping > Ports related > Mechanical Engineering related ",
+    "complaint":"I am facing an issue related to Mechanical Engineering related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-05T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00010",
+    "user_id":"DEMO027",
+    "org_code":"MSHPG",
+    "category_v7":26366,
+    "category_path":"Shipping > Ports related > Mechanical Engineering related ",
+    "complaint":"I am facing an issue related to Mechanical Engineering related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-05T10:08:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00011",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-06T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00012",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-06T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00013",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-06T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00014",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-06T10:12:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00015",
+    "user_id":"DEMO034",
+    "org_code":"MEAPD",
+    "category_v7":1250,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > On Hold Passport Applications > Application  on hold due to lack  of required documents.",
+    "complaint":"My passport application has been pending for more than 11 days. I request the concerned authority to review the application and provide the current status.",
+    "submitted_at":"2026-06-07T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00016",
+    "user_id":"DEMO034",
+    "org_code":"MEAPD",
+    "category_v7":1250,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > On Hold Passport Applications > Application  on hold due to lack  of required documents.",
+    "complaint":"My passport application has been pending for more than 11 days. I request the concerned authority to review the application and provide the current status.",
+    "submitted_at":"2026-06-07T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00017",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2410,
+    "category_path":"Labour and Employment > National Data Center related issues > Technical issues",
+    "complaint":"I am facing an issue related to Technical issues. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-08T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00018",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2410,
+    "category_path":"Labour and Employment > National Data Center related issues > Technical issues",
+    "complaint":"I am facing an issue related to Technical issues. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-08T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00019",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-09T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00020",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-09T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00021",
+    "user_id":"DEMO036",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am facing an issue related to Registered letters\/Registered letters with acknowledgement. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-10T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00022",
+    "user_id":"DEMO036",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am facing an issue related to Registered letters\/Registered letters with acknowledgement. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-10T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00023",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-11T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00024",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-11T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00025",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-11T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00026",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 16 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-12T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00027",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 16 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-12T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00028",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 17 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-13T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00029",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 17 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-13T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00030",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 18 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-14T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00031",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 18 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-06-14T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00032",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-15T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00033",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-15T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00034",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-15T10:08:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00035",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-16T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00036",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-16T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00037",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-16T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00038",
+    "user_id":"DEMO030",
+    "org_code":"DEABD",
+    "category_v7":272,
+    "category_path":"Banking > Service Matter Related",
+    "complaint":"I am facing an issue related to Service Matter Related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-17T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00039",
+    "user_id":"DEMO030",
+    "org_code":"DEABD",
+    "category_v7":272,
+    "category_path":"Banking > Service Matter Related",
+    "complaint":"I am facing an issue related to Service Matter Related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-17T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00040",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-18T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00041",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-18T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00042",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-18T10:08:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00043",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-18T10:12:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00044",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-06-18T10:16:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00045",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4451,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Search, Seizure Matters,     Reward to informer",
+    "complaint":"I am facing an issue related to Search, Seizure Matters,     Reward to informer. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-19T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00046",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4451,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Search, Seizure Matters,     Reward to informer",
+    "complaint":"I am facing an issue related to Search, Seizure Matters,     Reward to informer. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-19T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00047",
+    "user_id":"DEMO004",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 8 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-06-20T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00048",
+    "user_id":"DEMO004",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 8 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-06-20T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00049",
+    "user_id":"DEMO011",
+    "org_code":"DEABD",
+    "category_v7":328,
+    "category_path":"Banking > Service Charges Related > Loan processing Charges",
+    "complaint":"I am facing an issue related to Loan processing Charges. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-21T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00050",
+    "user_id":"DEMO011",
+    "org_code":"DEABD",
+    "category_v7":328,
+    "category_path":"Banking > Service Charges Related > Loan processing Charges",
+    "complaint":"I am facing an issue related to Loan processing Charges. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-21T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00051",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-22T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00052",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-22T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00053",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I received earlier PM-KISAN installments, but subsequent installments have stopped. I request the concerned department to verify my beneficiary status and resolve the issue.",
+    "submitted_at":"2026-06-22T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00054",
+    "user_id":"DEMO037",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am facing an issue related to Registered letters\/Registered letters with acknowledgement. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-23T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00055",
+    "user_id":"DEMO037",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am facing an issue related to Registered letters\/Registered letters with acknowledgement. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-23T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00056",
+    "user_id":"DEMO006",
+    "org_code":"DPOST",
+    "category_v7":86,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Value Payable",
+    "complaint":"I am facing an issue related to Value Payable. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-24T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00057",
+    "user_id":"DEMO006",
+    "org_code":"DPOST",
+    "category_v7":86,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Value Payable",
+    "complaint":"I am facing an issue related to Value Payable. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-24T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00058",
+    "user_id":"DEMO031",
+    "org_code":"MEAPD",
+    "category_v7":1292,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > Delay in Issuance of passport > Other reasons",
+    "complaint":"My passport application has been pending for more than 13 days. I request the concerned authority to review the application and provide the current status.",
+    "submitted_at":"2026-06-25T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00059",
+    "user_id":"DEMO031",
+    "org_code":"MEAPD",
+    "category_v7":1292,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > Delay in Issuance of passport > Other reasons",
+    "complaint":"My passport application has been pending for more than 13 days. I request the concerned authority to review the application and provide the current status.",
+    "submitted_at":"2026-06-25T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00060",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-26T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00061",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-26T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00062",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-06-26T10:08:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00063",
+    "user_id":"DEMO002",
+    "org_code":"DSEHE",
+    "category_v7":2172,
+    "category_path":"Higher Education > Policy Matter Related\/ New Education Policy > OSD Policy \/ National Education Policy",
+    "complaint":"I am facing an issue related to OSD Policy \/ National Education Policy. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-27T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00064",
+    "user_id":"DEMO002",
+    "org_code":"DSEHE",
+    "category_v7":2172,
+    "category_path":"Higher Education > Policy Matter Related\/ New Education Policy > OSD Policy \/ National Education Policy",
+    "complaint":"I am facing an issue related to OSD Policy \/ National Education Policy. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-27T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00065",
+    "user_id":"DEMO025",
+    "org_code":"UIDAI",
+    "category_v7":7801,
+    "category_path":"Unique Identification Authority of India > Non Receipt of Aadhaar PVC card > Non receipt of Aadhaar PVC Card",
+    "complaint":"I applied for an Aadhaar PVC card, but it has not been received. I request the concerned authority to check the dispatch status and resolve the issue.",
+    "submitted_at":"2026-06-28T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00066",
+    "user_id":"DEMO025",
+    "org_code":"UIDAI",
+    "category_v7":7801,
+    "category_path":"Unique Identification Authority of India > Non Receipt of Aadhaar PVC card > Non receipt of Aadhaar PVC Card",
+    "complaint":"I applied for an Aadhaar PVC card, but it has not been received. I request the concerned authority to check the dispatch status and resolve the issue.",
+    "submitted_at":"2026-06-28T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00067",
+    "user_id":"DEMO026",
+    "org_code":"MORLY",
+    "category_v7":11566,
+    "category_path":"Railway > Service matter",
+    "complaint":"I am facing an issue related to Service matter. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-29T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00068",
+    "user_id":"DEMO026",
+    "org_code":"MORLY",
+    "category_v7":11566,
+    "category_path":"Railway > Service matter",
+    "complaint":"I am facing an issue related to Service matter. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-29T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00069",
+    "user_id":"DEMO021",
+    "org_code":"CBODT",
+    "category_v7":4456,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Rectification",
+    "complaint":"I am facing an issue related to Rectification. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-30T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00070",
+    "user_id":"DEMO021",
+    "org_code":"CBODT",
+    "category_v7":4456,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Rectification",
+    "complaint":"I am facing an issue related to Rectification. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-06-30T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00071",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I have concerns regarding irregularities in the implementation of the PMAY-G scheme in my area. I request the concerned authority to investigate the matter.",
+    "submitted_at":"2026-07-01T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00072",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I have concerns regarding irregularities in the implementation of the PMAY-G scheme in my area. I request the concerned authority to investigate the matter.",
+    "submitted_at":"2026-07-01T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00073",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I have concerns regarding irregularities in the implementation of the PMAY-G scheme in my area. I request the concerned authority to investigate the matter.",
+    "submitted_at":"2026-07-01T10:08:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00074",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I have concerns regarding irregularities in the implementation of the PMAY-G scheme in my area. I request the concerned authority to investigate the matter.",
+    "submitted_at":"2026-07-01T10:12:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00075",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I have concerns regarding irregularities in the implementation of the PMAY-G scheme in my area. I request the concerned authority to investigate the matter.",
+    "submitted_at":"2026-07-01T10:16:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00076",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 20 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-07-02T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00077",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 20 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-07-02T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00078",
+    "user_id":"DEMO013",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-03T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00079",
+    "user_id":"DEMO013",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-03T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00080",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2413,
+    "category_path":"Labour and Employment > National Data Center related issues > Unable to submit online claim",
+    "complaint":"I am facing an issue related to Unable to submit online claim. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-04T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00081",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2413,
+    "category_path":"Labour and Employment > National Data Center related issues > Unable to submit online claim",
+    "complaint":"I am facing an issue related to Unable to submit online claim. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-04T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00082",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 7 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-07-05T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00083",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"My speed post article has not been delivered for the past 7 days. I request the postal department to check the delivery status and arrange delivery at the earliest.",
+    "submitted_at":"2026-07-05T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00084",
+    "user_id":"DEMO010",
+    "org_code":"MINHA",
+    "category_v7":4937,
+    "category_path":"Home Affairs > Matter Related to Unethical practices > Complaint against fundamentalist organization",
+    "complaint":"I am facing an issue related to Complaint against fundamentalist organization. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-06T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00085",
+    "user_id":"DEMO010",
+    "org_code":"MINHA",
+    "category_v7":4937,
+    "category_path":"Home Affairs > Matter Related to Unethical practices > Complaint against fundamentalist organization",
+    "complaint":"I am facing an issue related to Complaint against fundamentalist organization. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-06T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00086",
+    "user_id":"DEMO019",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"My eligible unclaimed dividend refund has not been received. I request the concerned authority to verify the claim and process the refund.",
+    "submitted_at":"2026-07-07T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00087",
+    "user_id":"DEMO019",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"My eligible unclaimed dividend refund has not been received. I request the concerned authority to verify the claim and process the refund.",
+    "submitted_at":"2026-07-07T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00088",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4452,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes >  Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India",
+    "complaint":"I am facing an issue related to Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-08T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00089",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4452,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes >  Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India",
+    "complaint":"I am facing an issue related to Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-08T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00090",
+    "user_id":"DEMO015",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-09T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00091",
+    "user_id":"DEMO015",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-09T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00092",
+    "user_id":"DEMO009",
+    "org_code":"MOLBR",
+    "category_v7":2210,
+    "category_path":"Labour and Employment > Service Matters > Transfer Related",
+    "complaint":"My service transfer request has remained pending despite submission of the required request. I request the concerned department to review the matter and provide an update.",
+    "submitted_at":"2026-07-10T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00093",
+    "user_id":"DEMO009",
+    "org_code":"MOLBR",
+    "category_v7":2210,
+    "category_path":"Labour and Employment > Service Matters > Transfer Related",
+    "complaint":"My service transfer request has remained pending despite submission of the required request. I request the concerned department to review the matter and provide an update.",
+    "submitted_at":"2026-07-10T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00094",
+    "user_id":"DEMO008",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am facing difficulty receiving the required service at the concerned government hospital. I request the health authorities to review the issue and take necessary action.",
+    "submitted_at":"2026-07-11T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00095",
+    "user_id":"DEMO008",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am facing difficulty receiving the required service at the concerned government hospital. I request the health authorities to review the issue and take necessary action.",
+    "submitted_at":"2026-07-11T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00096",
+    "user_id":"DEMO040",
+    "org_code":"DHLTH",
+    "category_v7":1182,
+    "category_path":"Health and Family Welfare > MoHFW Employee Related > Other",
+    "complaint":"I am facing an issue related to Other. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-12T10:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00097",
+    "user_id":"DEMO040",
+    "org_code":"DHLTH",
+    "category_v7":1182,
+    "category_path":"Health and Family Welfare > MoHFW Employee Related > Other",
+    "complaint":"I am facing an issue related to Other. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-12T10:04:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00098",
+    "user_id":"DEMO007",
+    "org_code":"CBODT",
+    "category_v7":4459,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > IT Return Processing",
+    "complaint":"My income tax return is still pending for processing. I request the concerned department to review the return and complete the processing.",
+    "submitted_at":"2026-07-13T10:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00099",
+    "user_id":"DEMO007",
+    "org_code":"CBODT",
+    "category_v7":4459,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > IT Return Processing",
+    "complaint":"My income tax return is still pending for processing. I request the concerned department to review the return and complete the processing.",
+    "submitted_at":"2026-07-13T10:04:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00100",
+    "user_id":"DEMO007",
+    "org_code":"CBODT",
+    "category_v7":4459,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > IT Return Processing",
+    "complaint":"My income tax return is still pending for processing. I request the concerned department to review the return and complete the processing.",
+    "submitted_at":"2026-07-13T10:08:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00101",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 16 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-07-14T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00102",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"My registered parcel has not been delivered for the past 16 days. I request the postal department to trace the parcel and provide an update.",
+    "submitted_at":"2026-07-14T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00103",
+    "user_id":"DEMO003",
+    "org_code":"MOLBR",
+    "category_v7":2358,
+    "category_path":"Labour and Employment > Others (EPFO)",
+    "complaint":"I am facing an issue related to Others (EPFO). The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-15T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00104",
+    "user_id":"DEMO003",
+    "org_code":"MOLBR",
+    "category_v7":2358,
+    "category_path":"Labour and Employment > Others (EPFO)",
+    "complaint":"I am facing an issue related to Others (EPFO). The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-15T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00105",
+    "user_id":"DEMO001",
+    "org_code":"MOLBR",
+    "category_v7":2204,
+    "category_path":"Labour and Employment > Medical Reimbursement > Not Acceptance of Bill",
+    "complaint":"I am facing an issue related to Not Acceptance of Bill. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-16T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00106",
+    "user_id":"DEMO001",
+    "org_code":"MOLBR",
+    "category_v7":2204,
+    "category_path":"Labour and Employment > Medical Reimbursement > Not Acceptance of Bill",
+    "complaint":"I am facing an issue related to Not Acceptance of Bill. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-16T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00107",
+    "user_id":"DEMO018",
+    "org_code":"MOCOP",
+    "category_v7":20761,
+    "category_path":"Ministry of Cooperation > Central Registrar and Cooperative Society > Multi State Cooperative Society related matters > Other Multi State Cooperative Society related issues",
+    "complaint":"I am facing an issue related to Other Multi State Cooperative Society related issues. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-17T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00108",
+    "user_id":"DEMO018",
+    "org_code":"MOCOP",
+    "category_v7":20761,
+    "category_path":"Ministry of Cooperation > Central Registrar and Cooperative Society > Multi State Cooperative Society related matters > Other Multi State Cooperative Society related issues",
+    "complaint":"I am facing an issue related to Other Multi State Cooperative Society related issues. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-17T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00109",
+    "user_id":"DEMO023",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-18T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00110",
+    "user_id":"DEMO023",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"My income tax return has been processed, but the expected refund has not been credited. I request the concerned department to review the refund status and take necessary action.",
+    "submitted_at":"2026-07-18T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00111",
+    "user_id":"DEMO017",
+    "org_code":"MOCAV",
+    "category_v7":1457,
+    "category_path":"Civil Aviation > Airlines Related > Other Airlines",
+    "complaint":"I am facing an unresolved issue related to an airline service. I request the concerned aviation authority to review the matter and provide assistance.",
+    "submitted_at":"2026-07-19T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00112",
+    "user_id":"DEMO017",
+    "org_code":"MOCAV",
+    "category_v7":1457,
+    "category_path":"Civil Aviation > Airlines Related > Other Airlines",
+    "complaint":"I am facing an unresolved issue related to an airline service. I request the concerned aviation authority to review the matter and provide assistance.",
+    "submitted_at":"2026-07-19T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00113",
+    "user_id":"DEMO038",
+    "org_code":"DEAID",
+    "category_v7":356,
+    "category_path":"Insurance > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-07-20T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00114",
+    "user_id":"DEMO038",
+    "org_code":"DEAID",
+    "category_v7":356,
+    "category_path":"Insurance > Fraud",
+    "complaint":"I have noticed an unauthorized banking transaction in my account. I request the concerned bank authorities to investigate the transaction and take appropriate action.",
+    "submitted_at":"2026-07-20T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00115",
+    "user_id":"DEMO033",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am facing difficulty receiving the required service at the concerned government hospital. I request the health authorities to review the issue and take necessary action.",
+    "submitted_at":"2026-07-21T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00116",
+    "user_id":"DEMO033",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am facing difficulty receiving the required service at the concerned government hospital. I request the health authorities to review the issue and take necessary action.",
+    "submitted_at":"2026-07-21T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00117",
+    "user_id":"DEMO012",
+    "org_code":"DARPG",
+    "category_v7":25810,
+    "category_path":"Administrative Reforms and public grievances > State Government related",
+    "complaint":"I am facing an issue related to State Government related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-22T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00118",
+    "user_id":"DEMO012",
+    "org_code":"DARPG",
+    "category_v7":25810,
+    "category_path":"Administrative Reforms and public grievances > State Government related",
+    "complaint":"I am facing an issue related to State Government related. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-22T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"MOCK-2026-00119",
+    "user_id":"DEMO024",
+    "org_code":"DSEHE",
+    "category_v7":2133,
+    "category_path":"Higher Education > Entrance Exam Related (NEET \/ JEE \/ NET \/ ARPIT \/ GPAT \/ IND SAT \/ NCHM \/ CMAT \/ IIFT \/ NLU) > Issues regarding admission rounds",
+    "complaint":"I am facing an issue related to Issues regarding admission rounds. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-23T10:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"MOCK-2026-00120",
+    "user_id":"DEMO024",
+    "org_code":"DSEHE",
+    "category_v7":2133,
+    "category_path":"Higher Education > Entrance Exam Related (NEET \/ JEE \/ NET \/ ARPIT \/ GPAT \/ IND SAT \/ NCHM \/ CMAT \/ IIFT \/ NLU) > Issues regarding admission rounds",
+    "complaint":"I am facing an issue related to Issues regarding admission rounds. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-23T10:04:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"MOCK-2026-00121",
+    "user_id":"DEMO032",
+    "org_code":"UIDAI",
+    "category_v7":7813,
+    "category_path":"Unique Identification Authority of India > Non Updation of AADHAAR > SRN\/URN is under Process and SRN\/URN is Rejected",
+    "complaint":"I am facing an issue related to SRN\/URN is under Process and SRN\/URN is Rejected. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-24T10:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"MOCK-2026-00122",
+    "user_id":"DEMO032",
+    "org_code":"UIDAI",
+    "category_v7":7813,
+    "category_path":"Unique Identification Authority of India > Non Updation of AADHAAR > SRN\/URN is under Process and SRN\/URN is Rejected",
+    "complaint":"I am facing an issue related to SRN\/URN is under Process and SRN\/URN is Rejected. The matter has not yet been resolved. I request the concerned department to review the grievance and take appropriate action.",
+    "submitted_at":"2026-07-24T10:04:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00001",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-001-B has not been delivered for 4 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-07-02T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00002",
+    "user_id":"DEMO029",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-002-B has not been delivered for 5 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-07-03T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00003",
+    "user_id":"DEMO005",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"I am reporting a separate matter related to Refund  of unclaimed dividend under reference REF-003-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-04T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00004",
+    "user_id":"DEMO027",
+    "org_code":"MSHPG",
+    "category_v7":26366,
+    "category_path":"Shipping > Ports related > Mechanical Engineering related ",
+    "complaint":"I am reporting a separate matter related to Mechanical Engineering related under reference REF-004-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-05T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00005",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I am reporting a separate PM-KISAN installment issue under reference REF-005-B. Please verify this beneficiary payment issue and provide the current status.",
+    "submitted_at":"2026-07-06T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00006",
+    "user_id":"DEMO034",
+    "org_code":"MEAPD",
+    "category_v7":1250,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > On Hold Passport Applications > Application  on hold due to lack  of required documents.",
+    "complaint":"A different passport application with reference REF-006-B has remained pending for 9 days. I request the concerned authority to provide its current status.",
+    "submitted_at":"2026-07-07T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00007",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2410,
+    "category_path":"Labour and Employment > National Data Center related issues > Technical issues",
+    "complaint":"I am reporting a separate matter related to Technical issues under reference REF-007-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-08T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00008",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-008-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-07-09T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00009",
+    "user_id":"DEMO036",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am reporting a separate matter related to Registered letters\/Registered letters with acknowledgement under reference REF-009-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-10T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00010",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-010-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-07-11T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00011",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-011-B has not been delivered for 14 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-07-12T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00012",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-012-B has not been delivered for 3 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-07-13T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00013",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-013-B has not been delivered for 4 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-07-14T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00014",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I noticed another unauthorized transaction identified as REF-014-B. I request the bank authorities to investigate this separate transaction.",
+    "submitted_at":"2026-07-15T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00015",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I am reporting a separate PM-KISAN installment issue under reference REF-015-B. Please verify this beneficiary payment issue and provide the current status.",
+    "submitted_at":"2026-07-16T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00016",
+    "user_id":"DEMO030",
+    "org_code":"DEABD",
+    "category_v7":272,
+    "category_path":"Banking > Service Matter Related",
+    "complaint":"I am reporting a separate matter related to Service Matter Related under reference REF-016-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-17T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00017",
+    "user_id":"DEMO028",
+    "org_code":"DEABD",
+    "category_v7":263,
+    "category_path":"Banking > Fraud",
+    "complaint":"I noticed another unauthorized transaction identified as REF-017-B. I request the bank authorities to investigate this separate transaction.",
+    "submitted_at":"2026-07-18T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00018",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4451,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Search, Seizure Matters,     Reward to informer",
+    "complaint":"I am reporting a separate matter related to Search, Seizure Matters,     Reward to informer under reference REF-018-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-19T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00019",
+    "user_id":"DEMO004",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"A separate registered parcel with reference REF-019-B is pending delivery. I request the postal department to trace this parcel and provide an update.",
+    "submitted_at":"2026-07-20T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00020",
+    "user_id":"DEMO011",
+    "org_code":"DEABD",
+    "category_v7":328,
+    "category_path":"Banking > Service Charges Related > Loan processing Charges",
+    "complaint":"I am reporting a separate matter related to Loan processing Charges under reference REF-020-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-21T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00021",
+    "user_id":"DEMO016",
+    "org_code":"DOAAC",
+    "category_v7":22456,
+    "category_path":"Department of Agriculture and Farmers Welfare > PMKISAN related issues > stoppage of installments after issue of few installments",
+    "complaint":"I am reporting a separate PM-KISAN installment issue under reference REF-021-B. Please verify this beneficiary payment issue and provide the current status.",
+    "submitted_at":"2026-07-22T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00022",
+    "user_id":"DEMO037",
+    "org_code":"DPOST",
+    "category_v7":79,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Registered letters\/Registered letters with acknowledgement",
+    "complaint":"I am reporting a separate matter related to Registered letters\/Registered letters with acknowledgement under reference REF-022-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-23T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00023",
+    "user_id":"DEMO006",
+    "org_code":"DPOST",
+    "category_v7":86,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Value Payable",
+    "complaint":"I am reporting a separate matter related to Value Payable under reference REF-023-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-24T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00024",
+    "user_id":"DEMO031",
+    "org_code":"MEAPD",
+    "category_v7":1292,
+    "category_path":"External Affairs > Normal Fresh\/ Re-issue Passport application > Delay in Issuance of passport > Other reasons",
+    "complaint":"A different passport application with reference REF-024-B has remained pending for 3 days. I request the concerned authority to provide its current status.",
+    "submitted_at":"2026-07-25T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00025",
+    "user_id":"DEMO014",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-025-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-07-26T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00026",
+    "user_id":"DEMO002",
+    "org_code":"DSEHE",
+    "category_v7":2172,
+    "category_path":"Higher Education > Policy Matter Related\/ New Education Policy > OSD Policy \/ National Education Policy",
+    "complaint":"I am reporting a separate matter related to OSD Policy \/ National Education Policy under reference REF-026-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-27T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00027",
+    "user_id":"DEMO025",
+    "org_code":"UIDAI",
+    "category_v7":7801,
+    "category_path":"Unique Identification Authority of India > Non Receipt of Aadhaar PVC card > Non receipt of Aadhaar PVC Card",
+    "complaint":"I have a separate Aadhaar PVC card request with reference REF-027-B that has not been received. Please check the dispatch status.",
+    "submitted_at":"2026-07-28T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00028",
+    "user_id":"DEMO026",
+    "org_code":"MORLY",
+    "category_v7":11566,
+    "category_path":"Railway > Service matter",
+    "complaint":"I am reporting a separate matter related to Service matter under reference REF-028-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-29T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00029",
+    "user_id":"DEMO021",
+    "org_code":"CBODT",
+    "category_v7":4456,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Rectification",
+    "complaint":"I am reporting a separate matter related to Rectification under reference REF-029-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-30T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00030",
+    "user_id":"DEMO020",
+    "org_code":"DORLD",
+    "category_v7":5047,
+    "category_path":"Rural Development > Pradhan Mantri Awaas Yojana - Gramin (Rural) > PMAY - G related Complaints > Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block)",
+    "complaint":"I am reporting a separate matter related to Irregularities\/ misappropriation of PMAY-G funds (State Govt.\/ Block) under reference REF-030-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-07-31T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00031",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"A separate registered parcel with reference REF-031-B is pending delivery. I request the postal department to trace this parcel and provide an update.",
+    "submitted_at":"2026-08-01T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00032",
+    "user_id":"DEMO013",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-032-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-08-02T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00033",
+    "user_id":"DEMO022",
+    "org_code":"MOLBR",
+    "category_v7":2413,
+    "category_path":"Labour and Employment > National Data Center related issues > Unable to submit online claim",
+    "complaint":"I am reporting a separate matter related to Unable to submit online claim under reference REF-033-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-03T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00034",
+    "user_id":"DEMO035",
+    "org_code":"DPOST",
+    "category_v7":77,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Speed post letters",
+    "complaint":"A different speed post article with reference REF-034-B has not been delivered for 13 days. I request the postal department to trace this separate article and provide the delivery status.",
+    "submitted_at":"2026-08-04T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00035",
+    "user_id":"DEMO010",
+    "org_code":"MINHA",
+    "category_v7":4937,
+    "category_path":"Home Affairs > Matter Related to Unethical practices > Complaint against fundamentalist organization",
+    "complaint":"I am reporting a separate matter related to Complaint against fundamentalist organization under reference REF-035-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-05T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00036",
+    "user_id":"DEMO019",
+    "org_code":"DCOYA",
+    "category_v7":5362,
+    "category_path":"Ministry of Corporate Affairs > Investors Education & Protection Fund > Refund  of unclaimed dividend",
+    "complaint":"I am reporting a separate matter related to Refund  of unclaimed dividend under reference REF-036-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-06T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00037",
+    "user_id":"DEMO041",
+    "org_code":"CBODT",
+    "category_v7":4452,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes >  Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India",
+    "complaint":"I am reporting a separate matter related to Information about Undisclosed Foreign Income and Assets (including financial interest in any entity) located outside India under reference REF-037-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-07T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00038",
+    "user_id":"DEMO015",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-038-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-08-08T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00039",
+    "user_id":"DEMO009",
+    "org_code":"MOLBR",
+    "category_v7":2210,
+    "category_path":"Labour and Employment > Service Matters > Transfer Related",
+    "complaint":"I am reporting a separate matter related to Transfer Related under reference REF-039-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-09T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00040",
+    "user_id":"DEMO008",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am reporting a separate matter related to Other Hospitals under reference REF-040-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-10T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00041",
+    "user_id":"DEMO040",
+    "org_code":"DHLTH",
+    "category_v7":1182,
+    "category_path":"Health and Family Welfare > MoHFW Employee Related > Other",
+    "complaint":"I am reporting a separate matter related to Other under reference REF-041-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-11T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00042",
+    "user_id":"DEMO007",
+    "org_code":"CBODT",
+    "category_v7":4459,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > IT Return Processing",
+    "complaint":"I am reporting a separate matter related to IT Return Processing under reference REF-042-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-12T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00043",
+    "user_id":"DEMO039",
+    "org_code":"DPOST",
+    "category_v7":80,
+    "category_path":"Posts > Delay\/ Non - Delivery\/Abstraction of Postal Articles > Domestic > Parcels\/Registered Parcels",
+    "complaint":"A separate registered parcel with reference REF-043-B is pending delivery. I request the postal department to trace this parcel and provide an update.",
+    "submitted_at":"2026-08-13T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00044",
+    "user_id":"DEMO003",
+    "org_code":"MOLBR",
+    "category_v7":2358,
+    "category_path":"Labour and Employment > Others (EPFO)",
+    "complaint":"I am reporting a separate matter related to Others (EPFO) under reference REF-044-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-14T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00045",
+    "user_id":"DEMO001",
+    "org_code":"MOLBR",
+    "category_v7":2204,
+    "category_path":"Labour and Employment > Medical Reimbursement > Not Acceptance of Bill",
+    "complaint":"I am reporting a separate matter related to Not Acceptance of Bill under reference REF-045-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-15T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00046",
+    "user_id":"DEMO018",
+    "org_code":"MOCOP",
+    "category_v7":20761,
+    "category_path":"Ministry of Cooperation > Central Registrar and Cooperative Society > Multi State Cooperative Society related matters > Other Multi State Cooperative Society related issues",
+    "complaint":"I am reporting a separate matter related to Other Multi State Cooperative Society related issues under reference REF-046-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-16T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00047",
+    "user_id":"DEMO023",
+    "org_code":"CBODT",
+    "category_v7":4455,
+    "category_path":"Central Board of Direct Taxes (Income Tax) > Direct Taxes > Issues with IT Returns > Refund matter, Wrong Demand",
+    "complaint":"I am facing a refund issue for a different income tax return reference REF-047-B. I request the concerned department to review this separate refund matter.",
+    "submitted_at":"2026-08-17T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00048",
+    "user_id":"DEMO017",
+    "org_code":"MOCAV",
+    "category_v7":1457,
+    "category_path":"Civil Aviation > Airlines Related > Other Airlines",
+    "complaint":"I am reporting a separate matter related to Other Airlines under reference REF-048-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-18T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00049",
+    "user_id":"DEMO038",
+    "org_code":"DEAID",
+    "category_v7":356,
+    "category_path":"Insurance > Fraud",
+    "complaint":"I noticed another unauthorized transaction identified as REF-049-B. I request the bank authorities to investigate this separate transaction.",
+    "submitted_at":"2026-08-19T11:00:00+00:00",
+    "status":"Resolved"
+  },
+  {
+    "grievance_id":"RELATED-2026-00050",
+    "user_id":"DEMO033",
+    "org_code":"DHLTH",
+    "category_v7":677,
+    "category_path":"Health and Family Welfare > Hospitals > Other Hospitals",
+    "complaint":"I am reporting a separate matter related to Other Hospitals under reference REF-050-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-20T11:00:00+00:00",
+    "status":"Closed"
+  },
+  {
+    "grievance_id":"RELATED-2026-00051",
+    "user_id":"DEMO012",
+    "org_code":"DARPG",
+    "category_v7":25810,
+    "category_path":"Administrative Reforms and public grievances > State Government related",
+    "complaint":"I am reporting a separate matter related to State Government related under reference REF-051-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-21T11:00:00+00:00",
+    "status":"Pending"
+  },
+  {
+    "grievance_id":"RELATED-2026-00052",
+    "user_id":"DEMO024",
+    "org_code":"DSEHE",
+    "category_v7":2133,
+    "category_path":"Higher Education > Entrance Exam Related (NEET \/ JEE \/ NET \/ ARPIT \/ GPAT \/ IND SAT \/ NCHM \/ CMAT \/ IIFT \/ NLU) > Issues regarding admission rounds",
+    "complaint":"I am reporting a separate matter related to Issues regarding admission rounds under reference REF-052-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-22T11:00:00+00:00",
+    "status":"Under Review"
+  },
+  {
+    "grievance_id":"RELATED-2026-00053",
+    "user_id":"DEMO032",
+    "org_code":"UIDAI",
+    "category_v7":7813,
+    "category_path":"Unique Identification Authority of India > Non Updation of AADHAAR > SRN\/URN is under Process and SRN\/URN is Rejected",
+    "complaint":"I am reporting a separate matter related to SRN\/URN is under Process and SRN\/URN is Rejected under reference REF-053-B. This is a different incident and I request the concerned department to review it.",
+    "submitted_at":"2026-08-23T11:00:00+00:00",
+    "status":"Resolved"
+  }
+]
