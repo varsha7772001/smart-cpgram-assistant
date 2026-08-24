@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 os.environ.setdefault("OPENROUTER_API_KEY", "test-key")
+os.environ.setdefault("DEMO_ADMIN_API_KEY", "test-admin-key")
 
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
@@ -70,6 +71,67 @@ class ApiValidationTests(unittest.TestCase):
         })
         self.assertEqual(result.missing_information, ["What was the approximate date?"])
         self.assertEqual(result.org_code, main.TAXONOMY_METADATA[category_path]["org_code"])
+
+    def test_status_update_missing_admin_key_rejected(self):
+        response = self.client.patch(
+            "/api/v1/admin/grievances/SMART-2026-TEST/status",
+            json={"status": "Under Review"},
+        )
+        self.assertEqual(response.status_code, 401)
+
+    def test_status_update_wrong_admin_key_rejected(self):
+        response = self.client.patch(
+            "/api/v1/admin/grievances/SMART-2026-TEST/status",
+            headers={"X-Demo-Admin-Key": "wrong-key"},
+            json={"status": "Under Review"},
+        )
+        self.assertEqual(response.status_code, 401)
+
+    def test_status_update_invalid_status_rejected(self):
+        response = self.client.patch(
+            "/api/v1/admin/grievances/SMART-2026-TEST/status",
+            headers={"X-Demo-Admin-Key": "test-admin-key"},
+            json={"status": "Escalated"},
+        )
+        self.assertEqual(response.status_code, 422)
+
+    def test_status_update_unknown_grievance_returns_404(self):
+        with patch.object(main, "get_admin_grievance", return_value=None):
+            response = self.client.patch(
+                "/api/v1/admin/grievances/SMART-2026-MISSING/status",
+                headers={"X-Demo-Admin-Key": "test-admin-key"},
+                json={"status": "Under Review"},
+            )
+        self.assertEqual(response.status_code, 404)
+
+    def test_forward_status_lifecycle_and_backward_rejection(self):
+        state = {"status": "Draft"}
+
+        def get_grievance(_grievance_id):
+            return {"grievance_id": "SMART-2026-TEST", "status": state["status"]}
+
+        def update_status(_grievance_id, status):
+            state["status"] = status
+            return {"grievance_id": "SMART-2026-TEST", "status": status}
+
+        with patch.object(main, "get_admin_grievance", side_effect=get_grievance), patch.object(
+            main, "update_admin_grievance_status", side_effect=update_status
+        ):
+            for expected_status in ("Pending", "Under Review", "Resolved", "Closed"):
+                response = self.client.patch(
+                    "/api/v1/admin/grievances/SMART-2026-TEST/status",
+                    headers={"X-Demo-Admin-Key": "test-admin-key"},
+                    json={"status": expected_status},
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json()["status"], expected_status)
+
+            backward = self.client.patch(
+                "/api/v1/admin/grievances/SMART-2026-TEST/status",
+                headers={"X-Demo-Admin-Key": "test-admin-key"},
+                json={"status": "Resolved"},
+            )
+            self.assertEqual(backward.status_code, 409)
 
 
 if __name__ == "__main__":

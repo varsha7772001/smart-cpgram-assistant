@@ -65,10 +65,10 @@ npm run dev
 
 Environment variables:
 
-- Backend: `OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL`, comma-separated `ALLOWED_ORIGINS`
+- Backend: `OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL`, comma-separated `ALLOWED_ORIGINS`; for the protected simulated lifecycle only: `DEMO_ADMIN_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
 - Frontend: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_API_BASE_URL`
 
-Never put a Supabase service-role key or OpenRouter key in frontend variables.
+Never put a Supabase service-role key, demo admin key, or OpenRouter key in frontend variables. The service-role key is used only by the protected simulated status-update path.
 
 ## Deployment
 
@@ -84,5 +84,10 @@ Deploy `frontend` as a Vite static build (`npm ci && npm run build`, output `dis
 - Similarity identifies a possible related issue and deliberately leaves the decision to the citizen.
 - In-memory rate protection is per backend process and is not a distributed production limiter.
 - Public deployment and live Supabase/OpenRouter credentials must be configured by the operator.
+- Prototype submission stores a Pending record but does not contact CPGRAMS. Later processing statuses are simulated through a protected backend-only API.
+
+## Simulated status lifecycle
+
+The prototype enforces `Draft → Pending → Under Review → Resolved → Closed`. Citizen submission creates or upgrades a record to Pending. Later transitions use the protected backend endpoint and require `DEMO_ADMIN_API_KEY`; server-only `SUPABASE_SERVICE_ROLE_KEY` access is isolated to that path. These variables must never be configured in Vercel or exposed to the browser.
 
 See [docs/hackathon.md](docs/hackathon.md) for the evaluation-oriented product summary.

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AuthPage from "./components/auth/AuthPage";
 import { supabase } from "./lib/supabase";
-import { fetchGrievances, saveGrievanceDraft } from "./services/grievances";
+import { createGrievanceId, fetchGrievances, saveGrievanceDraft, submitGrievance } from "./services/grievances";
 import { checkDemoDuplicate, fetchDemoGrievances } from "./services/demo";
 import { checkAuthenticatedDuplicate, getGrievanceAssistance } from "./services/assistance";
 
@@ -28,6 +28,11 @@ function App() {
   const [editing, setEditing] = useState(false);
   const [showMatchedGrievance, setShowMatchedGrievance] = useState(false);
   const [matchDismissed, setMatchDismissed] = useState(false);
+  const [savedRecord, setSavedRecord] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
+  const [submission, setSubmission] = useState(null);
+  const submissionLock = useRef(false);
 
   useEffect(() => {
     let mounted = true;
@@ -98,6 +103,10 @@ function App() {
     setDuplicateResult(null);
     setSaveError("");
     setSaved(false);
+    setSavedRecord(null);
+    setSubmission(null);
+    setSubmissionError("");
+    submissionLock.current = false;
     setAssistanceError("");
     setEditing(false);
     setMatchDismissed(false);
@@ -140,29 +149,88 @@ function App() {
   };
 
   const handleSave = async () => {
-    if (appMode !== "authenticated" || !session || saving || saved) return;
+    if (appMode !== "authenticated" || !session || saving || saved || submitting || submissionLock.current) return;
     setSaving(true);
     setSaveError("");
 
     try {
-      await saveGrievanceDraft({
+      const record = await saveGrievanceDraft({
         userId: session.user.id,
         originalComplaint: complaint.trim(),
         preparedGrievance: rewritten,
         classification: result,
+        existingGrievanceId: savedRecord?.grievance_id,
       });
+      setSavedRecord(record);
       setSaved(true);
       setToastMessage("Grievance saved to your account");
       setTimeout(() => setToastMessage(""), 2500);
       setHistoryLoading(true);
-      const grievances = await fetchGrievances();
-      setUserHistory(grievances);
-      setHistoryError("");
+      try {
+        const grievances = await fetchGrievances();
+        setUserHistory(grievances);
+        setHistoryError("");
+      } catch (historyRefreshError) {
+        setHistoryError(historyRefreshError.message || "Draft saved, but history could not be refreshed.");
+      }
     } catch (error) {
       setSaveError(error.message || "Unable to save this grievance.");
     } finally {
       setHistoryLoading(false);
       setSaving(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (saving || submitting || submission || submissionLock.current || !rewritten.trim()) return;
+    submissionLock.current = true;
+    setSubmitting(true);
+    setSubmissionError("");
+
+    try {
+      const submittedAt = new Date().toISOString();
+      let record;
+      if (appMode === "demo") {
+        record = {
+          grievance_id: createGrievanceId("SMART-DEMO"),
+          category_path: result?.category_path ?? result?.department ?? null,
+          original_complaint: complaint.trim(),
+          prepared_grievance: rewritten,
+          status: "Pending",
+          created_at: submittedAt,
+        };
+        setUserHistory((history) => [record, ...history]);
+      } else {
+        if (!session) throw new Error("Your session has expired. Please sign in again.");
+        record = await submitGrievance({
+          userId: session.user.id,
+          originalComplaint: complaint.trim(),
+          preparedGrievance: rewritten,
+          classification: result,
+          draftGrievanceId: savedRecord?.grievance_id,
+        });
+        setSubmission({ ...record, submitted_at: submittedAt });
+        setHistoryLoading(true);
+        try {
+          const grievances = await fetchGrievances();
+          setUserHistory(grievances);
+          setHistoryError("");
+        } catch (historyRefreshError) {
+          setHistoryError(historyRefreshError.message || "Submitted, but history could not be refreshed.");
+        } finally {
+          setHistoryLoading(false);
+        }
+      }
+      setSaved(record.status === "Draft");
+      if (appMode === "demo") setSubmission({ ...record, submitted_at: submittedAt });
+      setToastMessage("Prototype grievance submitted");
+      setTimeout(() => setToastMessage(""), 2500);
+    } catch (error) {
+      submissionLock.current = false;
+      setSubmissionError(error.message || "Unable to submit this grievance.");
+      setHistoryLoading(false);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -183,6 +251,9 @@ function App() {
     setAssistanceError("");
     setClarification("");
     setClarificationResolved(false);
+    setSavedRecord(null);
+    setSubmission(null);
+    submissionLock.current = false;
   };
 
   const handleLogout = async () => {
@@ -241,6 +312,23 @@ function App() {
           </div>
           {isDemo && <p className="mt-3 text-xs font-medium text-amber-800">All grievance information shown here is synthetic.</p>}
         </section>
+
+        {submission && (
+          <section className="mt-6 rounded-2xl border-2 border-green-600 bg-green-50 p-5 sm:p-6" aria-labelledby="acknowledgement-heading">
+            <p className="text-xs font-bold uppercase tracking-wider text-green-800">Prototype acknowledgement</p>
+            <h2 id="acknowledgement-heading" className="mt-1 text-2xl font-bold text-green-950">Grievance recorded as Pending</h2>
+            <p className="mt-2 text-sm font-semibold text-green-900">Submitted — awaiting review</p>
+            <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+              <div><dt className="text-green-800">Prototype reference</dt><dd className="mt-1 font-bold text-green-950">{submission.grievance_id}</dd></div>
+              <div><dt className="text-green-800">Status</dt><dd className="mt-1 font-bold text-green-950">Pending</dd></div>
+              <div><dt className="text-green-800">Department / category</dt><dd className="mt-1 font-semibold text-green-950">{submission.category_path || result?.department || "Not determined"}</dd></div>
+              <div><dt className="text-green-800">Timestamp</dt><dd className="mt-1 font-semibold text-green-950">{new Date(submission.submitted_at).toLocaleString()}</dd></div>
+            </dl>
+            <div className="mt-5 rounded-lg bg-white p-4"><p className="text-xs font-semibold uppercase text-slate-500">Submitted grievance</p><p className="mt-2 text-sm leading-relaxed text-slate-800">{submission.prepared_grievance}</p></div>
+            <p className="mt-5 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-bold text-amber-950">Simulated submission. No grievance has been sent to CPGRAMS or any Government of India system.</p>
+            <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex text-sm font-semibold text-blue-800 underline hover:text-blue-950">Visit Official CPGRAMS</a>
+          </section>
+        )}
 
         <section className="mt-6">
           <h2 className="text-lg font-semibold text-gray-900">{isDemo ? "Synthetic Grievance History" : "Your Recent Grievances"}</h2>
@@ -341,19 +429,22 @@ function App() {
               </div>
               <textarea id="prepared-grievance" readOnly={!editing} value={rewritten} onChange={(event) => { setRewritten(event.target.value); setSaved(false); }} className={`mt-2 min-h-36 w-full rounded-lg border p-3 leading-relaxed outline-none ${editing ? "border-blue-500 ring-2 ring-blue-100" : "border-slate-200 bg-slate-50"}`} />
               <button type="button" onClick={copyGrievance} className="mt-4 cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 active:scale-95">Copy Grievance</button>
+              <button type="button" onClick={handleSubmit} disabled={saving || submitting || Boolean(submission) || !rewritten.trim()} className="ml-3 mt-4 cursor-pointer rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Submitting..." : submission ? "Submitted" : "Submit Grievance"}</button>
               {isDemo ? (
                 <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900">Demo mode — grievances are not saved.</p>
               ) : (
                 <div className="mt-4">
-                  <button type="button" onClick={handleSave} disabled={saving || saved || !rewritten.trim()} className="cursor-pointer rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-60">
+                  <button type="button" onClick={handleSave} disabled={saving || submitting || saved || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-60">
                     {saving ? "Saving..." : saved ? "Saved" : "Save Draft"}
                   </button>
                   <p className="mt-2 text-sm font-medium text-slate-700">Saved drafts are not submitted to CPGRAMS.</p>
                   {saveError && <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">Unable to save grievance: {saveError}</p>}
                 </div>
               )}
+              {isDemo && <p className="mt-2 text-xs font-semibold text-amber-800">Demo submissions are kept only in this browser session and never written to Supabase.</p>}
+              {submissionError && <p role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">Unable to submit grievance: {submissionError}</p>}
               <div className="mt-6 border-t border-slate-200 pt-5">
-                <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-lg bg-orange-700 px-5 py-3 font-semibold text-white hover:bg-orange-600">Continue to official CPGRAMS</a>
+                <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Visit Official CPGRAMS</a>
                 <p className="mt-3 text-sm text-slate-600">You will review and submit the grievance yourself on the official CPGRAMS website. Nothing is submitted automatically.</p>
               </div>
             </div>

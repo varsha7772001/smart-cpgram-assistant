@@ -1,13 +1,17 @@
 import json
 import os
 import re
+import secrets
 import time
 from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote
+from urllib.request import Request as UrlRequest, urlopen
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from openai import APIConnectionError, APITimeoutError, OpenAI, RateLimitError
@@ -27,6 +31,15 @@ ALLOWED_ORIGINS = [
     for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
     if origin.strip() and origin.strip() != "*"
 ]
+DEMO_ADMIN_API_KEY = os.getenv("DEMO_ADMIN_API_KEY")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+STATUS_TRANSITIONS = {
+    "Draft": "Pending",
+    "Pending": "Under Review",
+    "Under Review": "Resolved",
+    "Resolved": "Closed",
+}
 
 
 def load_grievances() -> list[dict[str, Any]]:
@@ -101,6 +114,26 @@ class DuplicateResponse(BaseModel):
     similarity: float = Field(ge=0, le=100)
     matched_grievance: dict[str, Any] | None
     context_note: str | None = None
+
+
+class StatusUpdateRequest(BaseModel):
+    status: str
+
+    @field_validator("status")
+    @classmethod
+    def status_must_be_known(cls, value: str) -> str:
+        value = value.strip()
+        allowed = {*STATUS_TRANSITIONS, "Closed"}
+        if value not in allowed:
+            raise ValueError(f"Status must be one of: {', '.join(sorted(allowed))}")
+        return value
+
+
+class StatusUpdateResponse(BaseModel):
+    grievance_id: str
+    previous_status: str
+    status: str
+    simulated: bool = True
 
 
 def parse_model_json(content: str) -> dict[str, Any]:
@@ -229,12 +262,59 @@ def compare_candidates(complaint: str, candidates: list[dict[str, Any]], categor
     )
 
 
+def require_admin_key(provided_key: str | None) -> None:
+    if not DEMO_ADMIN_API_KEY:
+        raise HTTPException(status_code=503, detail="Simulated status administration is not configured")
+    if not provided_key or not secrets.compare_digest(provided_key, DEMO_ADMIN_API_KEY):
+        raise HTTPException(status_code=401, detail="Invalid demo administration key")
+
+
+def require_supabase_admin_config() -> None:
+    if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE_KEY:
+        raise HTTPException(status_code=503, detail="Simulated status storage is not configured")
+
+
+def supabase_admin_request(method: str, grievance_id: str, payload: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    require_supabase_admin_config()
+    encoded_id = quote(grievance_id, safe="")
+    url = f"{SUPABASE_URL}/rest/v1/grievances?grievance_id=eq.{encoded_id}&select=*&limit=2"
+    headers = {
+        "apikey": SUPABASE_SERVICE_ROLE_KEY,
+        "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Prefer": "return=representation",
+    }
+    body = json.dumps(payload).encode("utf-8") if payload is not None else None
+    request = UrlRequest(url, data=body, headers=headers, method=method)
+    try:
+        with urlopen(request, timeout=15) as response:
+            content = response.read().decode("utf-8")
+            return json.loads(content) if content else []
+    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as error:
+        raise HTTPException(status_code=502, detail="Simulated status storage is temporarily unavailable") from error
+
+
+def get_admin_grievance(grievance_id: str) -> dict[str, Any] | None:
+    rows = supabase_admin_request("GET", grievance_id)
+    if len(rows) > 1:
+        raise HTTPException(status_code=409, detail="Grievance reference is not unique")
+    return rows[0] if rows else None
+
+
+def update_admin_grievance_status(grievance_id: str, status: str) -> dict[str, Any]:
+    rows = supabase_admin_request("PATCH", grievance_id, {"status": status})
+    if len(rows) != 1:
+        raise HTTPException(status_code=502, detail="Status update could not be confirmed")
+    return rows[0]
+
+
 app = FastAPI(title="Smart CPGRAM Assistant API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["GET", "POST", "PATCH", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
 )
 
@@ -280,6 +360,31 @@ def authenticated_candidate_duplicate_check(data: CandidateDuplicateRequest):
         for item in data.candidates
     ]
     return compare_candidates(data.complaint, candidates, data.category_path)
+
+
+@app.patch("/api/v1/admin/grievances/{grievance_id}/status", response_model=StatusUpdateResponse)
+def update_grievance_status(
+    grievance_id: str,
+    data: StatusUpdateRequest,
+    admin_key: str | None = Header(default=None, alias="X-Demo-Admin-Key"),
+):
+    require_admin_key(admin_key)
+    grievance = get_admin_grievance(grievance_id)
+    if grievance is None:
+        raise HTTPException(status_code=404, detail="Grievance not found")
+    current_status = grievance.get("status")
+    expected_status = STATUS_TRANSITIONS.get(current_status)
+    if data.status != expected_status:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Invalid status transition from {current_status} to {data.status}",
+        )
+    update_admin_grievance_status(grievance_id, data.status)
+    return StatusUpdateResponse(
+        grievance_id=grievance_id,
+        previous_status=current_status,
+        status=data.status,
+    )
 
 
 @app.get("/api/users/{user_id}/grievances")

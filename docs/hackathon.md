@@ -20,6 +20,7 @@ Smart CPGRAM Assistant is a pre-submission assistance layer. It guides a citizen
 - structured AI routing, missing-information check, and grievance preparation
 - candidate-scoped duplicate similarity with citizen control
 - editable final review, clipboard copy, and explicit official-site handoff
+- prototype acknowledgement and a forward-only simulated status lifecycle
 
 ## What is mocked
 
