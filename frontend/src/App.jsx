@@ -5,6 +5,12 @@ import { createGrievanceId, fetchGrievances, saveGrievanceDraft, submitGrievance
 import { checkDemoDuplicate, fetchDemoGrievances } from "./services/demo";
 import { checkAuthenticatedDuplicate, getGrievanceAssistance } from "./services/assistance";
 
+function updateHistoryWhenChanged(setHistory, nextHistory) {
+  setHistory((currentHistory) =>
+    JSON.stringify(currentHistory) === JSON.stringify(nextHistory) ? currentHistory : nextHistory
+  );
+}
+
 function App() {
   const [session, setSession] = useState(null);
   const [appMode, setAppMode] = useState("auth");
@@ -15,6 +21,8 @@ function App() {
   const [rewritten, setRewritten] = useState("");
   const [userHistory, setUserHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyRefreshing, setHistoryRefreshing] = useState(false);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const [historyError, setHistoryError] = useState("");
   const [duplicateResult, setDuplicateResult] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
@@ -36,6 +44,10 @@ function App() {
   const [duplicateError, setDuplicateError] = useState("");
   const submissionLock = useRef(false);
   const acknowledgementRef = useRef(null);
+  const historyLoadedRef = useRef(false);
+  const historyOwnerRef = useRef(null);
+  const historyRequestRef = useRef(null);
+  const appModeRef = useRef("auth");
 
   const resetGrievanceWorkflow = () => {
     setComplaint("");
@@ -67,21 +79,48 @@ function App() {
     supabase.auth.getSession().then(({ data, error }) => {
       if (!mounted) return;
       if (error) console.error("Unable to restore session:", error.message);
+      const restoredUserId = data.session?.user?.id ?? null;
+      historyOwnerRef.current = restoredUserId;
       setSession(data.session ?? null);
+      appModeRef.current = data.session ? "authenticated" : "auth";
       setAppMode(data.session ? "authenticated" : "auth");
-      setHistoryLoading(Boolean(data.session));
+      setHistoryLoading(Boolean(restoredUserId) && !historyLoadedRef.current);
       setAuthLoading(false);
     });
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, nextSession) => {
         if (!mounted) return;
+        const nextUserId = nextSession?.user?.id ?? null;
+        const userChanged = Boolean(nextUserId) && historyOwnerRef.current !== nextUserId;
         setSession(nextSession);
+        if (appModeRef.current === "demo") {
+          setAuthLoading(false);
+          return;
+        }
+        appModeRef.current = nextSession ? "authenticated" : "auth";
         setAppMode((currentMode) =>
           currentMode === "demo" ? "demo" : nextSession ? "authenticated" : "auth"
         );
-        setHistoryLoading(Boolean(nextSession));
-        if (!nextSession) setUserHistory([]);
+        if (!nextSession) {
+          historyOwnerRef.current = null;
+          historyLoadedRef.current = false;
+          historyRequestRef.current = null;
+          setUserHistory([]);
+          setHistoryLoaded(false);
+          setHistoryLoading(false);
+          setHistoryRefreshing(false);
+          setHistoryError("");
+        } else if (userChanged) {
+          historyOwnerRef.current = nextUserId;
+          historyLoadedRef.current = false;
+          historyRequestRef.current = null;
+          setUserHistory([]);
+          setHistoryLoaded(false);
+          setHistoryLoading(true);
+          setHistoryRefreshing(false);
+          setHistoryError("");
+        }
         setAuthLoading(false);
       }
     );
@@ -98,27 +137,40 @@ function App() {
     }
   }, [workflowView, submission]);
 
+  const historyUserId = session?.user?.id ?? null;
+
   useEffect(() => {
     if (appMode === "auth") return;
 
     let cancelled = false;
+    const requestKey = appMode === "demo" ? "demo" : `authenticated:${historyUserId}`;
     const loadHistory = async () => {
+      const initialLoad = !historyLoadedRef.current;
+      setHistoryLoading(initialLoad);
+      setHistoryRefreshing(!initialLoad);
       try {
-        let grievances;
-        if (appMode === "demo") {
-          grievances = await fetchDemoGrievances();
-        } else {
-          grievances = await fetchGrievances();
+        let request = historyRequestRef.current;
+        if (!request || request.key !== requestKey) {
+          const promise = appMode === "demo" ? fetchDemoGrievances() : fetchGrievances();
+          request = { key: requestKey, promise };
+          historyRequestRef.current = request;
         }
+        const grievances = await request.promise;
         if (!cancelled) {
-          setUserHistory(grievances);
+          updateHistoryWhenChanged(setUserHistory, grievances);
           setHistoryError("");
+          setHistoryLoaded(true);
+          historyLoadedRef.current = true;
         }
       } catch (error) {
         console.error("History load failed:", error);
         if (!cancelled) setHistoryError("We couldn't load your grievance history. Please try again.");
       } finally {
-        if (!cancelled) setHistoryLoading(false);
+        if (historyRequestRef.current?.key === requestKey) historyRequestRef.current = null;
+        if (!cancelled) {
+          setHistoryLoading(false);
+          setHistoryRefreshing(false);
+        }
       }
     };
 
@@ -126,7 +178,7 @@ function App() {
     return () => {
       cancelled = true;
     };
-  }, [appMode]);
+  }, [appMode, historyUserId]);
 
   const analyzeComplaint = async (additionalDetails = "") => {
     const baseComplaint = complaint.trim();
@@ -207,11 +259,16 @@ function App() {
       setSaved(true);
       setToastMessage("Draft saved");
       setTimeout(() => setToastMessage(""), 2500);
-      setHistoryLoading(true);
+      setHistoryRefreshing(historyLoadedRef.current);
+      setHistoryLoading(!historyLoadedRef.current);
       try {
+        const refreshOwner = session.user.id;
         const grievances = await fetchGrievances();
-        setUserHistory(grievances);
+        if (historyOwnerRef.current !== refreshOwner) return;
+        updateHistoryWhenChanged(setUserHistory, grievances);
         setHistoryError("");
+        setHistoryLoaded(true);
+        historyLoadedRef.current = true;
       } catch (historyRefreshError) {
         console.error("History refresh after draft save failed:", historyRefreshError);
         setHistoryError("Your draft was saved, but we couldn't refresh your grievance history.");
@@ -221,6 +278,7 @@ function App() {
       setSaveError("We couldn't save your draft. Please try again.");
     } finally {
       setHistoryLoading(false);
+      setHistoryRefreshing(false);
       setSaving(false);
     }
   };
@@ -259,16 +317,22 @@ function App() {
           category: [result?.category, result?.subcategory].filter(Boolean).join(" — "),
           submitted_at: record.submitted_at || submittedAt,
         });
-        setHistoryLoading(true);
+        setHistoryRefreshing(historyLoadedRef.current);
+        setHistoryLoading(!historyLoadedRef.current);
         try {
+          const refreshOwner = session.user.id;
           const grievances = await fetchGrievances();
-          setUserHistory(grievances);
+          if (historyOwnerRef.current !== refreshOwner) return;
+          updateHistoryWhenChanged(setUserHistory, grievances);
           setHistoryError("");
+          setHistoryLoaded(true);
+          historyLoadedRef.current = true;
         } catch (historyRefreshError) {
           console.error("History refresh after submission failed:", historyRefreshError);
           setHistoryError("Your grievance was submitted, but we couldn't refresh your history.");
         } finally {
           setHistoryLoading(false);
+          setHistoryRefreshing(false);
         }
       }
       setSaved(record.status === "Draft");
@@ -288,6 +352,7 @@ function App() {
       submissionLock.current = false;
       setSubmissionError("We couldn't submit your grievance right now. Please try again.");
       setHistoryLoading(false);
+      setHistoryRefreshing(false);
     } finally {
       setSubmitting(false);
     }
@@ -295,17 +360,30 @@ function App() {
 
   const enterDemo = () => {
     resetGrievanceWorkflow();
+    appModeRef.current = "demo";
+    historyOwnerRef.current = "demo";
+    historyLoadedRef.current = false;
+    historyRequestRef.current = null;
     setAppMode("demo");
     setWorkflowView("form");
     setHistoryLoading(true);
+    setHistoryRefreshing(false);
+    setHistoryLoaded(false);
     setHistoryError("");
     setUserHistory([]);
   };
 
   const exitDemo = () => {
     resetGrievanceWorkflow();
+    appModeRef.current = "auth";
+    historyOwnerRef.current = null;
+    historyLoadedRef.current = false;
+    historyRequestRef.current = null;
     setAppMode("auth");
     setUserHistory([]);
+    setHistoryLoaded(false);
+    setHistoryLoading(false);
+    setHistoryRefreshing(false);
     setHistoryError("");
     setWorkflowView("form");
   };
@@ -317,19 +395,26 @@ function App() {
 
   const viewMyGrievances = async () => {
     if (appMode === "authenticated") {
-      setHistoryLoading(true);
+      setHistoryRefreshing(historyLoadedRef.current);
+      setHistoryLoading(!historyLoadedRef.current);
       try {
+        const refreshOwner = session.user.id;
         const grievances = await fetchGrievances();
+        if (historyOwnerRef.current !== refreshOwner) return;
         const submittedReference = submission?.grievance_id;
-        setUserHistory(submittedReference
+        const orderedGrievances = submittedReference
           ? [...grievances].sort((left, right) => Number(right.grievance_id === submittedReference) - Number(left.grievance_id === submittedReference))
-          : grievances);
+          : grievances;
+        updateHistoryWhenChanged(setUserHistory, orderedGrievances);
         setHistoryError("");
+        setHistoryLoaded(true);
+        historyLoadedRef.current = true;
       } catch (error) {
         console.error("History refresh failed:", error);
         setHistoryError("We couldn't refresh your grievance history. Please try again.");
       } finally {
         setHistoryLoading(false);
+        setHistoryRefreshing(false);
       }
     }
     setSubmission(null);
@@ -344,6 +429,14 @@ function App() {
     } else {
       resetGrievanceWorkflow();
       setWorkflowView("form");
+      historyOwnerRef.current = null;
+      historyLoadedRef.current = false;
+      historyRequestRef.current = null;
+      setUserHistory([]);
+      setHistoryLoaded(false);
+      setHistoryLoading(false);
+      setHistoryRefreshing(false);
+      setHistoryError("");
     }
     setLogoutLoading(false);
   };
@@ -425,23 +518,27 @@ function App() {
             <h2 className="text-lg font-semibold text-gray-900">{isDemo ? "Synthetic Grievance History" : "Your Recent Grievances"}</h2>
             {workflowView === "history" && <button type="button" onClick={raiseAnotherGrievance} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800">Raise Another Grievance</button>}
           </div>
-          {historyLoading && (
+          {historyRefreshing && historyLoaded && <p role="status" className="mt-2 text-xs text-slate-500">Refreshing history…</p>}
+          {historyLoading && !historyLoaded && (
             <div role="status" className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
               Loading your grievance history...
             </div>
           )}
-          {!historyLoading && historyError && (
+          {!historyLoading && historyError && !historyLoaded && (
             <p role="alert" className="mt-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
               Unable to load your grievance history: {historyError}
             </p>
           )}
-          {!historyLoading && !historyError && userHistory.length === 0 && (
+          {historyError && historyLoaded && (
+            <p role="status" className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">{historyError} Showing your previously loaded history.</p>
+          )}
+          {historyLoaded && userHistory.length === 0 && (
             <div className="mt-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
               <p className="font-semibold text-slate-800">{isDemo ? "No synthetic grievances available." : "No grievances yet."}</p>
               <p className="mt-1 text-sm text-slate-600">{isDemo ? "The demo dataset could not provide any history." : "Your submitted grievances will appear here."}</p>
             </div>
           )}
-          {!historyLoading && !historyError && userHistory.length > 0 && (
+          {historyLoaded && userHistory.length > 0 && (
             <div className="mt-3 space-y-3">
               {userHistory.slice(0, 5).map((grievance) => (
               <article key={grievance.grievance_id} className="rounded-xl border border-gray-200 bg-white p-4">
