@@ -42,8 +42,13 @@ function App() {
   const [submission, setSubmission] = useState(null);
   const [workflowView, setWorkflowView] = useState("form");
   const [duplicateError, setDuplicateError] = useState("");
+  const [complaintError, setComplaintError] = useState("");
+  const [relevanceClarification, setRelevanceClarification] = useState("");
+  const [relevanceAttempts, setRelevanceAttempts] = useState(0);
+  const [routingDetails, setRoutingDetails] = useState("");
   const submissionLock = useRef(false);
   const acknowledgementRef = useRef(null);
+  const complaintRef = useRef(null);
   const historyLoadedRef = useRef(false);
   const historyOwnerRef = useRef(null);
   const historyRequestRef = useRef(null);
@@ -56,6 +61,10 @@ function App() {
     setRewritten("");
     setDuplicateResult(null);
     setDuplicateError("");
+    setComplaintError("");
+    setRelevanceClarification("");
+    setRelevanceAttempts(0);
+    setRoutingDetails("");
     setToastMessage("");
     setSaving(false);
     setSaveError("");
@@ -182,8 +191,13 @@ function App() {
 
   const analyzeComplaint = async (additionalDetails = "") => {
     const baseComplaint = complaint.trim();
-    if (!baseComplaint) return;
+    const words = baseComplaint.match(/[A-Za-z]+/g) ?? [];
+    if (!baseComplaint || baseComplaint.length < 8 || words.length <= 1 || ["help", "problem", "not working", "please help", "issue", "urgent"].includes(baseComplaint.toLowerCase())) {
+      setComplaintError("Please describe what happened and mention the service involved.");
+      return;
+    }
     setLoading(true);
+    setComplaintError("");
     setResult(null);
     setRewritten("");
     setDuplicateResult(null);
@@ -204,8 +218,22 @@ function App() {
         : baseComplaint;
       const assistance = await getGrievanceAssistance(fullComplaint);
       setResult(assistance);
+      if (assistance.relevance !== "eligible") {
+        setRewritten("");
+        setDuplicateResult(null);
+        setClarificationResolved(false);
+        return;
+      }
       setRewritten(assistance.prepared_grievance);
       setClarificationResolved(assistance.missing_information.length === 0 || Boolean(additionalDetails));
+      const assistanceRoutingReady = Boolean(
+        assistance.category_path
+        && assistance.department
+        && assistance.department !== "Unable to determine"
+        && assistance.category
+        && assistance.confidence >= 40
+      );
+      if (!assistanceRoutingReady) return;
 
       try {
         const duplicate = appMode === "demo"
@@ -230,6 +258,30 @@ function App() {
 
   const submitClarification = () => analyzeComplaint(clarification);
 
+  const submitRelevanceClarification = () => {
+    if (!relevanceClarification.trim() || relevanceAttempts >= 2) return;
+    setRelevanceAttempts((attempts) => attempts + 1);
+    analyzeComplaint(relevanceClarification);
+  };
+
+  const submitRoutingDetails = () => {
+    if (!routingDetails.trim()) return;
+    analyzeComplaint(routingDetails);
+  };
+
+  const editComplaint = () => {
+    setResult(null);
+    setRewritten("");
+    setDuplicateResult(null);
+    setDuplicateError("");
+    setComplaintError("");
+    setRelevanceClarification("");
+    setRelevanceAttempts(0);
+    setRoutingDetails("");
+    setAssistanceError("");
+    requestAnimationFrame(() => complaintRef.current?.focus());
+  };
+
   const copyGrievance = async () => {
     try {
       await navigator.clipboard.writeText(rewritten);
@@ -243,7 +295,7 @@ function App() {
   };
 
   const handleSave = async () => {
-    if (appMode !== "authenticated" || !session || saving || saved || submitting || submissionLock.current) return;
+    if (appMode !== "authenticated" || !session || !routingReady || saving || saved || submitting || submissionLock.current) return;
     setSaving(true);
     setSaveError("");
     setSubmissionError("");
@@ -284,7 +336,7 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    if (saving || submitting || submission || submissionLock.current || !rewritten.trim()) return;
+    if (!routingReady || saving || submitting || submission || submissionLock.current || !rewritten.trim()) return;
     submissionLock.current = true;
     setSubmitting(true);
     setSubmissionError("");
@@ -455,6 +507,14 @@ function App() {
   if (appMode === "auth") return <AuthPage onTryDemo={enterDemo} />;
 
   const isDemo = appMode === "demo";
+  const routingReady = Boolean(
+    result?.relevance === "eligible"
+    && result.category_path
+    && result.department
+    && result.department !== "Unable to determine"
+    && result.category
+    && result.confidence >= 40
+  );
   const displayName = isDemo
     ? "Demo Citizen"
     : session.user.user_metadata?.full_name || session.user.email;
@@ -561,15 +621,42 @@ function App() {
           <h2 className="mt-1 text-xl font-semibold text-gray-900">Describe your problem</h2>
           <p className="mt-2 text-gray-600">Use your own words. Do not include passwords, OTPs, bank credentials, Aadhaar or PAN numbers.</p>
           <label htmlFor="complaint" className="mt-5 block text-sm font-medium text-gray-800">What happened?</label>
-          <textarea id="complaint" maxLength={3000} value={complaint} onChange={(event) => { setComplaint(event.target.value); if (savedRecord) setSaved(false); }} placeholder="Example: My speed post has not been delivered for 10 days..." className="mt-2 min-h-40 w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100" />
+          <textarea ref={complaintRef} id="complaint" maxLength={3000} value={complaint} onChange={(event) => { setComplaint(event.target.value); setComplaintError(""); if (savedRecord) setSaved(false); }} placeholder="Example: My speed post has not been delivered for 10 days..." className="mt-2 min-h-40 w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100" aria-invalid={Boolean(complaintError)} aria-describedby={complaintError ? "complaint-error" : undefined} />
           <p className="mt-1 text-right text-xs text-slate-500">{complaint.length}/3000</p>
           <button type="button" onClick={() => analyzeComplaint()} disabled={loading || !complaint.trim()} className="mt-3 cursor-pointer rounded-xl bg-blue-900 px-6 py-3 font-medium text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">
             {loading ? "Preparing your grievance..." : "Continue"}
           </button>
+          {complaintError && <p id="complaint-error" role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">{complaintError}</p>}
           {assistanceError && <p role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">{assistanceError}</p>}
           {duplicateError && <p role="status" className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">{duplicateError}</p>}
 
-          {result?.missing_information?.length > 0 && !clarificationResolved && (
+          {result?.relevance === "not_eligible" && (
+            <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-5" role="status">
+              <h3 className="font-bold text-amber-950">This issue may be outside this assistant's scope</h3>
+              <p className="mt-2 text-sm leading-relaxed text-amber-950">This assistant is designed for grievances related to government departments, schemes, portals and public services.</p>
+              <p className="mt-2 text-sm text-amber-900">If your issue involves a government service, tell us which service or department is involved.</p>
+              <button type="button" onClick={editComplaint} className="mt-4 cursor-pointer rounded-lg border border-amber-700 px-4 py-2 text-sm font-semibold text-amber-950 hover:bg-amber-100">Edit grievance</button>
+            </div>
+          )}
+
+          {result?.relevance === "unclear" && (
+            <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
+              <h3 className="font-semibold text-blue-950">Please clarify the public service involved</h3>
+              <p className="mt-2 text-sm text-blue-900">{result.clarification_question || "Is this issue related to a government website, department, scheme or public service? If yes, please mention which one."}</p>
+              {relevanceAttempts < 2 ? (
+                <>
+                  <label htmlFor="relevance-clarification" className="mt-4 block text-sm font-medium text-blue-950">Government or public service details</label>
+                  <textarea id="relevance-clarification" value={relevanceClarification} onChange={(event) => setRelevanceClarification(event.target.value)} className="mt-2 min-h-24 w-full rounded-lg border border-blue-200 p-3 outline-none focus:border-blue-700" />
+                  <button type="button" onClick={submitRelevanceClarification} disabled={loading || !relevanceClarification.trim()} className="mt-3 cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">{loading ? "Checking..." : "Continue"}</button>
+                </>
+              ) : (
+                <p className="mt-3 text-sm font-medium text-blue-950">We still couldn't confirm the government or public service involved. Please edit the grievance and name the service.</p>
+              )}
+              <button type="button" onClick={editComplaint} className="mt-3 block cursor-pointer text-sm font-semibold text-blue-900 underline">Edit grievance</button>
+            </div>
+          )}
+
+          {result?.relevance === "eligible" && result?.missing_information?.length > 0 && !clarificationResolved && (
             <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
               <h3 className="font-semibold text-blue-950">One more detail may help</h3>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-blue-900">{result.missing_information.map((question) => <li key={question}>{question}</li>)}</ul>
@@ -582,7 +669,7 @@ function App() {
             </div>
           )}
 
-          {duplicateResult?.possible_match && !matchDismissed && (clarificationResolved || result?.missing_information?.length === 0) && (
+          {routingReady && duplicateResult?.possible_match && !matchDismissed && (clarificationResolved || result?.missing_information?.length === 0) && (
             <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-5 text-sm text-amber-950">
               <h3 className="font-bold">Possible existing grievance</h3>
               <p className="mt-1">We found a previous grievance that may relate to this issue. Similar wording does not always mean it is the same issue.</p>
@@ -600,7 +687,16 @@ function App() {
             </div>
           )}
 
-          {result && (clarificationResolved || result.missing_information.length === 0) && (
+          {result?.relevance === "eligible" && !routingReady && (clarificationResolved || result.missing_information.length === 0) && (
+            <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-5">
+              <h3 className="font-semibold text-amber-950">We couldn't confidently identify the appropriate grievance category yet.</h3>
+              <label htmlFor="routing-details" className="mt-4 block text-sm font-medium text-amber-950">Add the government department, scheme, portal or service involved</label>
+              <textarea id="routing-details" value={routingDetails} onChange={(event) => setRoutingDetails(event.target.value)} className="mt-2 min-h-24 w-full rounded-lg border border-amber-300 p-3 outline-none focus:border-amber-700" />
+              <button type="button" onClick={submitRoutingDetails} disabled={loading || !routingDetails.trim()} className="mt-3 cursor-pointer rounded-lg bg-amber-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">{loading ? "Checking..." : "Add more details"}</button>
+            </div>
+          )}
+
+          {routingReady && (clarificationResolved || result.missing_information.length === 0) && (
             <div className="mt-6 rounded-xl bg-gray-50 p-5">
               <p className="text-xs font-bold uppercase tracking-wider text-blue-800">Final Review</p>
               <h3 className="mt-1 text-xl font-bold text-slate-950">Review before you continue</h3>
@@ -612,7 +708,7 @@ function App() {
               </dl>
             </div>
           )}
-          {rewritten && (clarificationResolved || result?.missing_information?.length === 0) && (
+          {routingReady && rewritten && (clarificationResolved || result?.missing_information?.length === 0) && (
             <div className="mt-6 rounded-xl border border-gray-200 bg-white p-5">
               <div className="flex items-center justify-between gap-3">
                 <label htmlFor="prepared-grievance" className="font-semibold text-gray-900">Prepared grievance</label>
