@@ -1,93 +1,295 @@
 # Smart CPGRAM Assistant
 
-Smart CPGRAM Assistant is an independent, browser-based prototype that helps citizens prepare a grievance before they submit it themselves on CPGRAMS. It is built for **Build What Moves India — Track 1: AI for Digital Public Infrastructure & Governance** and is not affiliated with or endorsed by the Government of India.
+AI-assisted grievance preparation, routing, duplicate awareness, prototype submission, and lifecycle tracking—starting with the citizen’s own words.
 
-## Problem and solution
+> **Independent hackathon prototype. Not affiliated with CPGRAMS or the Government of India. No grievance is transmitted to a Government of India system.**
 
-Citizens often know what went wrong but not the correct department/category, whether they already raised a related issue, or how to state the grievance concisely. This application provides a guided journey: authenticate or try a synthetic demo, describe the issue, add only essential missing context, receive controlled category guidance, review a possible previous grievance, edit/copy/save a draft, and explicitly continue to the official CPGRAMS portal.
+## Problem
 
-Nothing is automatically submitted to CPGRAMS.
+Citizens know what happened, but may not know the right department or category. Informal descriptions can be unclear, important facts may be missing, repeat grievances may be raised unnecessarily, and the service lifecycle may be unfamiliar. Traditional forms ask citizens to understand administrative structure before they can explain their problem.
 
-## Architecture and stack
+## Solution
 
-```text
-React/Vite/Tailwind browser app
-├── Supabase Auth and RLS-protected grievance drafts
-└── FastAPI API
-    ├── OpenRouter-hosted model: structured assistance
-    ├── controlled taxonomy derived from local category paths
-    └── lightweight candidate-scoped TF-IDF similarity
+**Tell us what happened → AI understands → asks minimal clarification → suggests routing → checks previous grievances → prepares a formal grievance → citizen reviews → simulated Submit → acknowledgement → status lifecycle.**
+
+The citizen completes this prototype journey without leaving the application. The official CPGRAMS website is an optional secondary link only.
+
+## Why This Is Different
+
+| Traditional approach | Smart CPGRAM Assistant |
+| --- | --- |
+| Citizen must understand **Department → Category → Form → Description** | Citizen begins with **“Tell us what happened.”** |
+| Taxonomy comes before the citizen’s story | Natural language maps to a controlled prototype taxonomy |
+| Repeat complaints may be hard to notice | The citizen’s own history is checked for a possible related issue |
+
+## User Journey Diagram
+
+```mermaid
+flowchart TD
+    A[Login / Sign Up / Try Demo] --> B[Describe grievance]
+    B --> C{Clarification needed?}
+    C -->|Yes| D[Ask minimal clarification]
+    C -->|No| E[Suggest department and category]
+    D --> E
+    E --> F[Check citizen's previous grievances]
+    F --> G{Possible existing grievance?}
+    G -->|Yes| H[Citizen reviews possible match]
+    H --> I{Same issue?}
+    I -->|Different| J[This Is a Different Issue]
+    I -->|Same| K[View existing grievance]
+    G -->|No| L[AI-prepared grievance]
+    J --> L
+    L --> M[Final Review]
+    M --> N{Citizen action}
+    N -->|Save Draft| O[Draft]
+    N -->|Submit Grievance| P[Prototype acknowledgement]
+    O -->|Submit later| P
+    P --> Q[Pending]
+    Q --> R[Under Review]
+    R --> S[Resolved]
+    S --> T[Closed]
 ```
 
-- Frontend: React 19, Vite, Tailwind CSS, Supabase JS
-- Backend: FastAPI, Pydantic, OpenAI-compatible OpenRouter client, scikit-learn
-- Storage/authentication: Supabase with Row Level Security
+## Architecture Diagram
 
-## What works
+```mermaid
+flowchart LR
+    B[Citizen Browser] --> F[React / Vite<br/>Vercel]
+    F -->|Session-scoped reads/writes| S[(Supabase<br/>Auth + Database + RLS)]
+    F -->|Assistance and duplicate requests| A[FastAPI<br/>Render]
+    A --> O[OpenRouter]
+    A --> X[Routing + Duplicate +<br/>Protected Status Services]
+    X -->|Protected simulated status updates| S
+    F -. Optional external link .-> G[CPGRAMS / Government Systems]
+    A -.- N[NO LIVE CONNECTION TO CPGRAMS OR ANY GOVERNMENT SYSTEM]
+    N -.- G
+```
 
-- Email/password signup, verification-compatible login, persisted sessions, and logout
-- RLS-protected authenticated grievance history and draft saving
-- No-account Demo Mode with synthetic history
-- One-call department/category routing, missing-information questions, and grievance preparation
-- Authenticated candidate-scoped and synthetic-demo duplicate/related-issue checks
-- Editable final review, copy feedback, and explicit official CPGRAMS handoff
+The service-role credential is used only by the protected Render endpoint. It is never shipped to the browser or Vercel.
 
-## What is mocked
+## Real vs Simulated
 
-- Government submission is never automated; users submit on the official portal themselves.
-- Demo history is privacy-safe synthetic data, not live CPGRAMS data.
-- Suggested routing is assistance, not an authoritative government routing decision.
-- No private or internal government API is accessed.
+| Real in this prototype | Simulated |
+| --- | --- |
+| Supabase authentication, session restore, and RLS | Government submission and official acknowledgement |
+| OpenRouter AI assistance and guardrails | Department processing and government status updates |
+| Controlled routing and duplicate checking | CPGRAMS integration |
+| Draft and prototype submission storage | Any Government of India backend interaction |
+| Authenticated history and synthetic demo history | |
+| Protected forward-only status API | |
 
-The local dataset is privacy-safe synthetic data derived from patterns and category structure observed during analysis of a public CPGRAMS-related dataset. It contains no intentional real citizen PII.
+## Possible Duplicate ≠ Duplicate
 
-## Local setup
+Semantic similarity is advisory. The interface says **“Possible existing grievance”** because similar language may describe a different date, location, transaction, or event. The citizen retains control through **“This Is a Different Issue”** and can continue preparing the new grievance.
+
+## Status Lifecycle
+
+```mermaid
+flowchart LR
+    D[Draft] --> P[Pending] --> U[Under Review] --> R[Resolved] --> C[Closed]
+```
+
+Citizen submission creates `Pending` or upgrades the same saved `Draft` row. Processing after Pending is simulated. Citizen-facing code cannot advance processing statuses; forward transitions use a protected backend API and database enforcement.
+
+## Demo Mode
+
+Demo Mode needs no registration. It uses privacy-safe synthetic history, is isolated from authenticated users and Supabase writes, and keeps a simulated submission only in the current browser session. References use `SMART-DEMO-{YEAR}-{8 chars}` and the UI labels Demo Mode, Synthetic Data, and Simulated Submission—making it suitable for judges without real citizen data.
+
+## Privacy & Security
+
+- Supabase RLS remains the primary per-user data boundary.
+- Storage functions derive `user_id` from the current Supabase session; UI callers cannot supply it.
+- A database trigger prevents citizens from changing grievance identity or advancing processing status.
+- OpenRouter, demo-admin, and Supabase service-role keys are backend-only.
+- Authenticated duplicate candidates come only from RLS-filtered session history; demo data stays synthetic.
+- Complaint length, controlled categories, statuses, references, model output, and admin payloads are validated.
+- Sensitive clarification prompts for Aadhaar, PAN, OTPs, passwords, and financial credentials are filtered.
+- CORS uses an explicit allowlist; wildcard origins are discarded.
+- The admin key is constant-time compared, never logged or returned, and status writes are race-safe.
+- There is no live government API, scraping, automated official form submission, or government credential handling.
+
+## AI Guardrails
+
+The AI may organize only citizen-supplied facts. It must not invent dates, locations, amounts, reference numbers, laws or policies, or government actions. It asks at most two necessary clarification questions and avoids sensitive identifiers and credentials.
+
+## Technology Stack
+
+| Layer | Technology |
+| --- | --- |
+| Frontend | React, Vite, Tailwind CSS |
+| Backend | FastAPI, Python |
+| Auth / database | Supabase |
+| Runtime AI | OpenRouter |
+| Deployment | Vercel + Render |
+| Development | OpenAI Codex |
+
+## Built with Codex
+
+Codex was meaningfully used for architecture and security review, Supabase integration, the grievance journey, duplicate detection, submission lifecycle, protected status API, tests, deployment guidance, and documentation. Runtime AI remains OpenRouter; this project does not claim OpenAI as its runtime model provider.
+
+## Repository Structure
+
+```text
+smart-cpgram-assistant/
+├── backend/
+│   ├── data/grievances.json
+│   ├── tests/test_api.py
+│   ├── .env.example
+│   ├── main.py
+│   ├── requirements.txt
+│   └── requirements-dev.txt
+├── docs/hackathon.md
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/auth/AuthPage.jsx
+│   │   ├── lib/supabase.js
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.js
+├── supabase/migrations/202608240001_release_lifecycle.sql
+└── README.md
+```
+
+Generated output, dependencies, caches, and local `.env` files are omitted.
+
+## Local Setup
 
 Prerequisites: Node.js supported by Vite 8 and Python 3.12+.
+
+Backend (Windows PowerShell):
 
 ```powershell
 cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 uvicorn main:app --reload
 ```
 
-In another terminal:
+Frontend, in a second window:
 
 ```powershell
 cd frontend
-npm ci
+npm.cmd ci
 Copy-Item .env.example .env
-npm run dev
+npm.cmd run dev
 ```
 
-Environment variables:
+Apply `supabase/migrations/202608240001_release_lifecycle.sql` through Supabase SQL Editor or CLI. Keep RLS enabled and verify policies restrict rows with `auth.uid() = user_id`.
 
-- Backend: `OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL`, comma-separated `ALLOWED_ORIGINS`; for the protected simulated lifecycle only: `DEMO_ADMIN_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
-- Frontend: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_API_BASE_URL`
+## Environment Variables
 
-Never put a Supabase service-role key, demo admin key, or OpenRouter key in frontend variables. The service-role key is used only by the protected simulated status-update path.
+Frontend (`frontend/.env`, Vercel only):
+
+```text
+VITE_SUPABASE_URL
+VITE_SUPABASE_PUBLISHABLE_KEY
+VITE_API_BASE_URL
+```
+
+Backend (`backend/.env`, Render only):
+
+```text
+OPENROUTER_API_KEY
+OPENROUTER_MODEL
+ALLOWED_ORIGINS
+DEMO_ADMIN_API_KEY
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+The service-role key is required because the protected status endpoint must update processing status while citizen policies forbid it. Never use backend secrets in `VITE_*`, Vercel, browser code, source control, logs, or responses.
+
+## API Overview
+
+| Method | Route | Purpose | Auth requirement |
+| --- | --- | --- | --- |
+| GET | `/` | Service metadata | None |
+| GET | `/api/health` | Health check | None |
+| POST | `/api/v1/grievance-assistance` | Routing, clarification, prepared grievance | None; rate limited |
+| POST | `/api/v1/duplicate-check` | Compare RLS-scoped authenticated history | Candidates originate from session history |
+| PATCH | `/api/v1/admin/grievances/{grievance_id}/status` | Forward-only simulated transition | `X-Demo-Admin-Key`; server-side service role |
+| GET | `/api/users/{user_id}/grievances` | Synthetic `DEMO035` history | None |
+| POST | `/api/check-duplicate` | Synthetic demo duplicate check | `DEMO035` only |
+| POST | `/api/classify` | Compatibility classification route | None; rate limited |
+| POST | `/api/rewrite` | Compatibility preparation route | None; rate limited |
 
 ## Deployment
 
-Deploy `frontend` as a Vite static build (`npm ci && npm run build`, output `dist`). Deploy `backend` as a Python web service (`pip install -r requirements.txt`, start `uvicorn main:app --host 0.0.0.0 --port $PORT`). Set the public backend URL in `VITE_API_BASE_URL`, the frontend origin in `ALLOWED_ORIGINS`, and the public frontend URL in Supabase Auth Site URL/redirect settings.
+### Frontend → Vercel
 
-## Codex usage
+- Root: `frontend`; install: `npm ci`; build: `npm run build`; output: `dist`.
+- Configure only the three frontend variables.
+- Set `VITE_API_BASE_URL` to the HTTPS Render origin and redeploy after changes.
 
-**Built with Codex.** Codex was used for architecture review, Supabase authentication, frontend refactoring, authenticated history and draft integration, mode isolation, structured assistance and duplicate checking, validation, tests, documentation, and deployment preparation. Runtime inference uses OpenRouter-hosted models; Codex is the development qualification path, not the runtime model claim.
+### Backend → Render
 
-## Limitations
+- Root: `backend`; build: `pip install -r requirements.txt`.
+- Start: `uvicorn main:app --host 0.0.0.0 --port $PORT`.
+- Configure all six backend variables and health path `/api/health`.
+- Set `ALLOWED_ORIGINS` to exact Vercel/local origins, comma-separated and without paths.
 
-- The category list is derived from the included dataset’s 35 paths, not the complete live CPGRAMS taxonomy.
-- Similarity identifies a possible related issue and deliberately leaves the decision to the citizen.
-- In-memory rate protection is per backend process and is not a distributed production limiter.
-- Public deployment and live Supabase/OpenRouter credentials must be configured by the operator.
-- Prototype submission stores a Pending record but does not contact CPGRAMS. Later processing statuses are simulated through a protected backend-only API.
+### Auth / database → Supabase
 
-## Simulated status lifecycle
+- Apply the release migration, preserve RLS and per-user policies, configure Vercel Auth URLs, and keep the service-role key only in Render.
 
-The prototype enforces `Draft → Pending → Under Review → Resolved → Closed`. Citizen submission creates or upgrades a record to Pending. Later transitions use the protected backend endpoint and require `DEMO_ADMIN_API_KEY`; server-only `SUPABASE_SERVICE_ROLE_KEY` access is isolated to that path. These variables must never be configured in Vercel or exposed to the browser.
+## Testing
 
-See [docs/hackathon.md](docs/hackathon.md) for the evaluation-oriented product summary.
+Final local commands and results on 24 August 2026:
+
+```powershell
+cd frontend
+npm.cmd run lint
+npm.cmd run build
+cd ..\backend
+.\.venv\Scripts\python.exe -m pytest -q
+python -m py_compile main.py
+python -c "import main; print(main.app.title, main.app.version, len(main.app.routes))"
+```
+
+ESLint passed. Vite production build passed (65 modules). Pytest passed **15/15** tests. Backend compile/import passed with **13 registered FastAPI routes**. One non-functional pytest cache-write warning came from the restricted test sandbox.
+
+Coverage includes input/provider validation, duplicate checks, clarification filtering, demo data, missing/wrong admin keys, invalid status/reference, unknown grievance, all forward transitions, backward rejection, `user_id` rejection, and simulated/timestamp responses. Auth persistence and RLS behavior require a deployed Supabase smoke test.
+
+## Synthetic Data
+
+The raw citizen grievance dataset is not deployed. `backend/data/grievances.json` contains privacy-safe synthetic data for demo/evaluation and no intentional real citizen PII. Demo submission state is never written to Supabase.
+
+## Current Limitations
+
+- No live CPGRAMS integration; government processing is simulated.
+- The 35-category taxonomy is not the complete CPGRAMS taxonomy.
+- Duplicate detection is advisory.
+- Free AI/backend hosting may introduce cold starts, quotas, and availability limits.
+- Rate protection is in-memory per backend instance, not distributed.
+- This is not production government software.
+
+## Path to Production
+
+- Obtain an approved sandbox/API and complete official taxonomy.
+- Complete security, privacy, retention, and independent accessibility reviews.
+- Add tamper-evident audit logging and formal operator authorization.
+- Add evaluated multilingual support.
+- Add distributed rate limiting, abuse controls, monitoring, and incident response.
+
+## Screenshots
+
+Add real screenshots before judging; do not substitute fabricated images.
+
+- Landing — _screenshot pending_
+- Try Demo — _screenshot pending_
+- AI Assistance — _screenshot pending_
+- Possible Existing Grievance — _screenshot pending_
+- Final Review — _screenshot pending_
+- Submission Confirmation — _screenshot pending_
+- History / Status — _screenshot pending_
+
+## Release Honesty
+
+Authentication, assistance, routing, duplicate awareness, drafts, stored prototype submissions, history, and protected transitions work when configured. Government submission, acknowledgement, processing, and integration remain clearly simulated.

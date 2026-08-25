@@ -155,7 +155,6 @@ function App() {
 
     try {
       const record = await saveGrievanceDraft({
-        userId: session.user.id,
         originalComplaint: complaint.trim(),
         preparedGrievance: rewritten,
         classification: result,
@@ -203,13 +202,12 @@ function App() {
       } else {
         if (!session) throw new Error("Your session has expired. Please sign in again.");
         record = await submitGrievance({
-          userId: session.user.id,
           originalComplaint: complaint.trim(),
           preparedGrievance: rewritten,
           classification: result,
           draftGrievanceId: savedRecord?.grievance_id,
         });
-        setSubmission({ ...record, submitted_at: submittedAt });
+        setSubmission({ ...record, submitted_at: record.submitted_at || submittedAt });
         setHistoryLoading(true);
         try {
           const grievances = await fetchGrievances();
@@ -317,7 +315,7 @@ function App() {
           <section className="mt-6 rounded-2xl border-2 border-green-600 bg-green-50 p-5 sm:p-6" aria-labelledby="acknowledgement-heading">
             <p className="text-xs font-bold uppercase tracking-wider text-green-800">Prototype acknowledgement</p>
             <h2 id="acknowledgement-heading" className="mt-1 text-2xl font-bold text-green-950">Grievance recorded as Pending</h2>
-            <p className="mt-2 text-sm font-semibold text-green-900">Submitted — awaiting review</p>
+            <p className="mt-2 text-sm font-semibold text-green-900">Status: Submitted — awaiting review</p>
             <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
               <div><dt className="text-green-800">Prototype reference</dt><dd className="mt-1 font-bold text-green-950">{submission.grievance_id}</dd></div>
               <div><dt className="text-green-800">Status</dt><dd className="mt-1 font-bold text-green-950">Pending</dd></div>
@@ -326,11 +324,15 @@ function App() {
             </dl>
             <div className="mt-5 rounded-lg bg-white p-4"><p className="text-xs font-semibold uppercase text-slate-500">Submitted grievance</p><p className="mt-2 text-sm leading-relaxed text-slate-800">{submission.prepared_grievance}</p></div>
             <p className="mt-5 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-bold text-amber-950">Simulated submission. No grievance has been sent to CPGRAMS or any Government of India system.</p>
-            <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex text-sm font-semibold text-blue-800 underline hover:text-blue-950">Visit Official CPGRAMS</a>
+            {isDemo && <p className="mt-3 text-sm font-bold text-amber-950">Demo Mode · Synthetic Data · Simulated Submission</p>}
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="#grievance-history" className="inline-flex justify-center rounded-lg bg-blue-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800">View My Grievances</a>
+              <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="inline-flex justify-center text-sm font-semibold text-blue-800 underline hover:text-blue-950">Visit Official CPGRAMS ↗</a>
+            </div>
           </section>
         )}
 
-        <section className="mt-6">
+        <section id="grievance-history" className="mt-6" tabIndex="-1">
           <h2 className="text-lg font-semibold text-gray-900">{isDemo ? "Synthetic Grievance History" : "Your Recent Grievances"}</h2>
           {historyLoading && (
             <div role="status" className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
@@ -428,10 +430,12 @@ function App() {
                 <button type="button" onClick={() => setEditing((value) => !value)} className="cursor-pointer text-sm font-semibold text-blue-800 hover:underline">{editing ? "Done Editing" : "Edit"}</button>
               </div>
               <textarea id="prepared-grievance" readOnly={!editing} value={rewritten} onChange={(event) => { setRewritten(event.target.value); setSaved(false); }} className={`mt-2 min-h-36 w-full rounded-lg border p-3 leading-relaxed outline-none ${editing ? "border-blue-500 ring-2 ring-blue-100" : "border-slate-200 bg-slate-50"}`} />
-              <button type="button" onClick={copyGrievance} className="mt-4 cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 active:scale-95">Copy Grievance</button>
-              <button type="button" onClick={handleSubmit} disabled={saving || submitting || Boolean(submission) || !rewritten.trim()} className="ml-3 mt-4 cursor-pointer rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Submitting..." : submission ? "Submitted" : "Submit Grievance"}</button>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <button type="button" onClick={copyGrievance} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 active:scale-95">Copy Grievance</button>
+                <button type="button" onClick={handleSubmit} disabled={saving || submitting || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Submitting..." : submission ? "Submitted" : "Submit Grievance"}</button>
+              </div>
               {isDemo ? (
-                <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900">Demo mode — grievances are not saved.</p>
+                <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900">Demo Mode · Synthetic Data · Simulated Submission. Kept only for this browser session.</p>
               ) : (
                 <div className="mt-4">
                   <button type="button" onClick={handleSave} disabled={saving || submitting || saved || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-60">

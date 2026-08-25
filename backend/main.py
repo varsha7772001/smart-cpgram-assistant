@@ -4,18 +4,19 @@ import re
 import secrets
 import time
 from collections import defaultdict, deque
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request as UrlRequest, urlopen
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Path as ApiPath, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from openai import APIConnectionError, APITimeoutError, OpenAI, RateLimitError
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -117,6 +118,8 @@ class DuplicateResponse(BaseModel):
 
 
 class StatusUpdateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     status: str
 
     @field_validator("status")
@@ -131,8 +134,8 @@ class StatusUpdateRequest(BaseModel):
 
 class StatusUpdateResponse(BaseModel):
     grievance_id: str
-    previous_status: str
     status: str
+    updated_at: str
     simulated: bool = True
 
 
@@ -274,10 +277,18 @@ def require_supabase_admin_config() -> None:
         raise HTTPException(status_code=503, detail="Simulated status storage is not configured")
 
 
-def supabase_admin_request(method: str, grievance_id: str, payload: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+def supabase_admin_request(
+    method: str,
+    grievance_id: str,
+    payload: dict[str, Any] | None = None,
+    current_status: str | None = None,
+) -> list[dict[str, Any]]:
     require_supabase_admin_config()
     encoded_id = quote(grievance_id, safe="")
-    url = f"{SUPABASE_URL}/rest/v1/grievances?grievance_id=eq.{encoded_id}&select=*&limit=2"
+    url = f"{SUPABASE_URL}/rest/v1/grievances?grievance_id=eq.{encoded_id}"
+    if current_status is not None:
+        url += f"&status=eq.{quote(current_status, safe='')}"
+    url += "&select=grievance_id,status,updated_at&limit=2"
     headers = {
         "apikey": SUPABASE_SERVICE_ROLE_KEY,
         "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
@@ -302,10 +313,16 @@ def get_admin_grievance(grievance_id: str) -> dict[str, Any] | None:
     return rows[0] if rows else None
 
 
-def update_admin_grievance_status(grievance_id: str, status: str) -> dict[str, Any]:
-    rows = supabase_admin_request("PATCH", grievance_id, {"status": status})
+def update_admin_grievance_status(grievance_id: str, current_status: str, status: str) -> dict[str, Any]:
+    updated_at = datetime.now(timezone.utc).isoformat()
+    rows = supabase_admin_request(
+        "PATCH",
+        grievance_id,
+        {"status": status, "updated_at": updated_at},
+        current_status=current_status,
+    )
     if len(rows) != 1:
-        raise HTTPException(status_code=502, detail="Status update could not be confirmed")
+        raise HTTPException(status_code=409, detail="Grievance status changed before this transition could be applied")
     return rows[0]
 
 
@@ -364,7 +381,7 @@ def authenticated_candidate_duplicate_check(data: CandidateDuplicateRequest):
 
 @app.patch("/api/v1/admin/grievances/{grievance_id}/status", response_model=StatusUpdateResponse)
 def update_grievance_status(
-    grievance_id: str,
+    grievance_id: Annotated[str, ApiPath(pattern=r"^SMART-\d{4}-[A-Z0-9]{8}$")],
     data: StatusUpdateRequest,
     admin_key: str | None = Header(default=None, alias="X-Demo-Admin-Key"),
 ):
@@ -379,11 +396,11 @@ def update_grievance_status(
             status_code=409,
             detail=f"Invalid status transition from {current_status} to {data.status}",
         )
-    update_admin_grievance_status(grievance_id, data.status)
+    updated = update_admin_grievance_status(grievance_id, current_status, data.status)
     return StatusUpdateResponse(
         grievance_id=grievance_id,
-        previous_status=current_status,
         status=data.status,
+        updated_at=updated["updated_at"],
     )
 
 
