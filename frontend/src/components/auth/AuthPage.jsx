@@ -66,7 +66,13 @@ function AuthPage({ onTryDemo }) {
         if (error) throw error;
       }
     } catch (error) {
-      setMessage({ type: "error", text: error.message || "Authentication failed. Please try again." });
+      console.error("Authentication failed:", error);
+      setMessage({
+        type: "error",
+        text: isSignUp
+          ? "We couldn't create your account right now. Please check your details and try again."
+          : "We couldn't sign you in. Please check your email and password and try again.",
+      });
     } finally {
       setSubmitting(false);
     }

@@ -32,7 +32,34 @@ function App() {
   const [submitting, setSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
   const [submission, setSubmission] = useState(null);
+  const [workflowView, setWorkflowView] = useState("form");
+  const [duplicateError, setDuplicateError] = useState("");
   const submissionLock = useRef(false);
+  const acknowledgementRef = useRef(null);
+
+  const resetGrievanceWorkflow = () => {
+    setComplaint("");
+    setResult(null);
+    setLoading(false);
+    setRewritten("");
+    setDuplicateResult(null);
+    setDuplicateError("");
+    setToastMessage("");
+    setSaving(false);
+    setSaveError("");
+    setSaved(false);
+    setAssistanceError("");
+    setClarification("");
+    setClarificationResolved(false);
+    setEditing(false);
+    setShowMatchedGrievance(false);
+    setMatchDismissed(false);
+    setSavedRecord(null);
+    setSubmitting(false);
+    setSubmissionError("");
+    setSubmission(null);
+    submissionLock.current = false;
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -66,6 +93,12 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (workflowView === "success" && submission) {
+      acknowledgementRef.current?.focus();
+    }
+  }, [workflowView, submission]);
+
+  useEffect(() => {
     if (appMode === "auth") return;
 
     let cancelled = false;
@@ -82,7 +115,8 @@ function App() {
           setHistoryError("");
         }
       } catch (error) {
-        if (!cancelled) setHistoryError(error.message);
+        console.error("History load failed:", error);
+        if (!cancelled) setHistoryError("We couldn't load your grievance history. Please try again.");
       } finally {
         if (!cancelled) setHistoryLoading(false);
       }
@@ -101,9 +135,9 @@ function App() {
     setResult(null);
     setRewritten("");
     setDuplicateResult(null);
+    setDuplicateError("");
     setSaveError("");
     setSaved(false);
-    setSavedRecord(null);
     setSubmission(null);
     setSubmissionError("");
     submissionLock.current = false;
@@ -121,16 +155,22 @@ function App() {
       setRewritten(assistance.prepared_grievance);
       setClarificationResolved(assistance.missing_information.length === 0 || Boolean(additionalDetails));
 
-      const duplicate = appMode === "demo"
-        ? await checkDemoDuplicate(fullComplaint)
-        : await checkAuthenticatedDuplicate({
-            complaint: fullComplaint,
-            categoryPath: assistance.category_path,
-            history: userHistory,
-          });
-      setDuplicateResult(duplicate);
+      try {
+        const duplicate = appMode === "demo"
+          ? await checkDemoDuplicate(fullComplaint)
+          : await checkAuthenticatedDuplicate({
+              complaint: fullComplaint,
+              categoryPath: assistance.category_path,
+              history: userHistory,
+            });
+        setDuplicateResult(duplicate);
+      } catch (error) {
+        console.error("Duplicate check failed:", error);
+        setDuplicateError("We couldn't check previous grievances right now. You can still continue.");
+      }
     } catch (error) {
-      setAssistanceError(error.message || "We could not analyze this grievance. Please try again.");
+      console.error("Grievance assistance failed:", error);
+      setAssistanceError("We couldn't prepare your grievance right now. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -145,6 +185,8 @@ function App() {
       setTimeout(() => setToastMessage(""), 2000);
     } catch (error) {
       console.error("Failed to copy:", error);
+      setToastMessage("We couldn't copy the grievance. Please select and copy the text manually.");
+      setTimeout(() => setToastMessage(""), 3000);
     }
   };
 
@@ -152,6 +194,7 @@ function App() {
     if (appMode !== "authenticated" || !session || saving || saved || submitting || submissionLock.current) return;
     setSaving(true);
     setSaveError("");
+    setSubmissionError("");
 
     try {
       const record = await saveGrievanceDraft({
@@ -162,7 +205,7 @@ function App() {
       });
       setSavedRecord(record);
       setSaved(true);
-      setToastMessage("Grievance saved to your account");
+      setToastMessage("Draft saved");
       setTimeout(() => setToastMessage(""), 2500);
       setHistoryLoading(true);
       try {
@@ -170,10 +213,12 @@ function App() {
         setUserHistory(grievances);
         setHistoryError("");
       } catch (historyRefreshError) {
-        setHistoryError(historyRefreshError.message || "Draft saved, but history could not be refreshed.");
+        console.error("History refresh after draft save failed:", historyRefreshError);
+        setHistoryError("Your draft was saved, but we couldn't refresh your grievance history.");
       }
     } catch (error) {
-      setSaveError(error.message || "Unable to save this grievance.");
+      console.error("Draft save failed:", error);
+      setSaveError("We couldn't save your draft. Please try again.");
     } finally {
       setHistoryLoading(false);
       setSaving(false);
@@ -185,6 +230,7 @@ function App() {
     submissionLock.current = true;
     setSubmitting(true);
     setSubmissionError("");
+    setSaveError("");
 
     try {
       const submittedAt = new Date().toISOString();
@@ -207,25 +253,40 @@ function App() {
           classification: result,
           draftGrievanceId: savedRecord?.grievance_id,
         });
-        setSubmission({ ...record, submitted_at: record.submitted_at || submittedAt });
+        setSubmission({
+          ...record,
+          department: result?.department,
+          category: [result?.category, result?.subcategory].filter(Boolean).join(" — "),
+          submitted_at: record.submitted_at || submittedAt,
+        });
         setHistoryLoading(true);
         try {
           const grievances = await fetchGrievances();
           setUserHistory(grievances);
           setHistoryError("");
         } catch (historyRefreshError) {
-          setHistoryError(historyRefreshError.message || "Submitted, but history could not be refreshed.");
+          console.error("History refresh after submission failed:", historyRefreshError);
+          setHistoryError("Your grievance was submitted, but we couldn't refresh your history.");
         } finally {
           setHistoryLoading(false);
         }
       }
       setSaved(record.status === "Draft");
-      if (appMode === "demo") setSubmission({ ...record, submitted_at: submittedAt });
+      if (appMode === "demo") {
+        setSubmission({
+          ...record,
+          department: result?.department,
+          category: [result?.category, result?.subcategory].filter(Boolean).join(" — "),
+          submitted_at: submittedAt,
+        });
+      }
+      setWorkflowView("success");
       setToastMessage("Prototype grievance submitted");
       setTimeout(() => setToastMessage(""), 2500);
     } catch (error) {
+      console.error("Grievance submission failed:", error);
       submissionLock.current = false;
-      setSubmissionError(error.message || "Unable to submit this grievance.");
+      setSubmissionError("We couldn't submit your grievance right now. Please try again.");
       setHistoryLoading(false);
     } finally {
       setSubmitting(false);
@@ -233,31 +294,57 @@ function App() {
   };
 
   const enterDemo = () => {
+    resetGrievanceWorkflow();
     setAppMode("demo");
+    setWorkflowView("form");
     setHistoryLoading(true);
     setHistoryError("");
     setUserHistory([]);
   };
 
   const exitDemo = () => {
+    resetGrievanceWorkflow();
     setAppMode("auth");
     setUserHistory([]);
-    setComplaint("");
-    setResult(null);
-    setRewritten("");
-    setDuplicateResult(null);
-    setAssistanceError("");
-    setClarification("");
-    setClarificationResolved(false);
-    setSavedRecord(null);
+    setHistoryError("");
+    setWorkflowView("form");
+  };
+
+  const raiseAnotherGrievance = () => {
+    resetGrievanceWorkflow();
+    setWorkflowView("form");
+  };
+
+  const viewMyGrievances = async () => {
+    if (appMode === "authenticated") {
+      setHistoryLoading(true);
+      try {
+        const grievances = await fetchGrievances();
+        const submittedReference = submission?.grievance_id;
+        setUserHistory(submittedReference
+          ? [...grievances].sort((left, right) => Number(right.grievance_id === submittedReference) - Number(left.grievance_id === submittedReference))
+          : grievances);
+        setHistoryError("");
+      } catch (error) {
+        console.error("History refresh failed:", error);
+        setHistoryError("We couldn't refresh your grievance history. Please try again.");
+      } finally {
+        setHistoryLoading(false);
+      }
+    }
     setSubmission(null);
-    submissionLock.current = false;
+    setWorkflowView("history");
   };
 
   const handleLogout = async () => {
     setLogoutLoading(true);
     const { error } = await supabase.auth.signOut();
-    if (error) console.error("Logout failed:", error.message);
+    if (error) {
+      console.error("Logout failed:", error.message);
+    } else {
+      resetGrievanceWorkflow();
+      setWorkflowView("form");
+    }
     setLogoutLoading(false);
   };
 
@@ -311,29 +398,33 @@ function App() {
           {isDemo && <p className="mt-3 text-xs font-medium text-amber-800">All grievance information shown here is synthetic.</p>}
         </section>
 
-        {submission && (
+        {workflowView === "success" && submission && (
           <section className="mt-6 rounded-2xl border-2 border-green-600 bg-green-50 p-5 sm:p-6" aria-labelledby="acknowledgement-heading">
             <p className="text-xs font-bold uppercase tracking-wider text-green-800">Prototype acknowledgement</p>
-            <h2 id="acknowledgement-heading" className="mt-1 text-2xl font-bold text-green-950">Grievance recorded as Pending</h2>
-            <p className="mt-2 text-sm font-semibold text-green-900">Status: Submitted — awaiting review</p>
+            <h2 ref={acknowledgementRef} tabIndex="-1" id="acknowledgement-heading" className="mt-1 rounded-sm text-2xl font-bold text-green-950 outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2">Prototype Submission Complete</h2>
             <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
-              <div><dt className="text-green-800">Prototype reference</dt><dd className="mt-1 font-bold text-green-950">{submission.grievance_id}</dd></div>
-              <div><dt className="text-green-800">Status</dt><dd className="mt-1 font-bold text-green-950">Pending</dd></div>
-              <div><dt className="text-green-800">Department / category</dt><dd className="mt-1 font-semibold text-green-950">{submission.category_path || result?.department || "Not determined"}</dd></div>
-              <div><dt className="text-green-800">Timestamp</dt><dd className="mt-1 font-semibold text-green-950">{new Date(submission.submitted_at).toLocaleString()}</dd></div>
+              <div><dt className="text-green-800">Prototype Reference</dt><dd className="mt-1 break-all font-bold text-green-950">{submission.grievance_id}</dd></div>
+              <div><dt className="text-green-800">Status</dt><dd className="mt-1 font-bold text-green-950">Submitted — awaiting review</dd></div>
+              <div><dt className="text-green-800">Department</dt><dd className="mt-1 break-words font-semibold text-green-950">{submission.department || result?.department || "Not determined"}</dd></div>
+              <div><dt className="text-green-800">Category</dt><dd className="mt-1 break-words font-semibold text-green-950">{submission.category || result?.category || "Not determined"}</dd></div>
+              <div><dt className="text-green-800">Submitted at</dt><dd className="mt-1 font-semibold text-green-950">{new Date(submission.submitted_at).toLocaleString()}</dd></div>
             </dl>
             <div className="mt-5 rounded-lg bg-white p-4"><p className="text-xs font-semibold uppercase text-slate-500">Submitted grievance</p><p className="mt-2 text-sm leading-relaxed text-slate-800">{submission.prepared_grievance}</p></div>
             <p className="mt-5 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-bold text-amber-950">Simulated submission. No grievance has been sent to CPGRAMS or any Government of India system.</p>
             {isDemo && <p className="mt-3 text-sm font-bold text-amber-950">Demo Mode · Synthetic Data · Simulated Submission</p>}
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a href="#grievance-history" className="inline-flex justify-center rounded-lg bg-blue-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800">View My Grievances</a>
-              <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="inline-flex justify-center text-sm font-semibold text-blue-800 underline hover:text-blue-950">Visit Official CPGRAMS ↗</a>
+              <button type="button" onClick={viewMyGrievances} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900">View My Grievances</button>
+              <button type="button" onClick={raiseAnotherGrievance} className="cursor-pointer rounded-lg border border-blue-900 px-4 py-2.5 text-sm font-semibold text-blue-900 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900">Raise Another Grievance</button>
             </div>
+            <a href="https://pgportal.gov.in/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex text-sm font-semibold text-blue-800 underline hover:text-blue-950">Visit Official CPGRAMS ↗</a>
           </section>
         )}
 
-        <section id="grievance-history" className="mt-6" tabIndex="-1">
-          <h2 className="text-lg font-semibold text-gray-900">{isDemo ? "Synthetic Grievance History" : "Your Recent Grievances"}</h2>
+        {workflowView !== "success" && <section id="grievance-history" className="mt-6" tabIndex="-1">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">{isDemo ? "Synthetic Grievance History" : "Your Recent Grievances"}</h2>
+            {workflowView === "history" && <button type="button" onClick={raiseAnotherGrievance} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800">Raise Another Grievance</button>}
+          </div>
           {historyLoading && (
             <div role="status" className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
               Loading your grievance history...
@@ -357,7 +448,7 @@ function App() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-900">{grievance.category_path || "Uncategorized"}</p>
-                    <p className="mt-1 text-xs text-gray-500">{grievance.grievance_id}</p>
+                    <p className="mt-1 break-all text-xs text-gray-500">{grievance.grievance_id}</p>
                   </div>
                   <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">{grievance.status}</span>
                 </div>
@@ -366,26 +457,27 @@ function App() {
               ))}
             </div>
           )}
-        </section>
+        </section>}
 
-        <section className="mt-8 border-t border-slate-200 pt-6">
+        {workflowView === "form" && <section className="mt-8 border-t border-slate-200 pt-6">
           <p className="text-sm font-semibold text-blue-800">Lodge New Grievance</p>
           <h2 className="mt-1 text-xl font-semibold text-gray-900">Describe your problem</h2>
           <p className="mt-2 text-gray-600">Use your own words. Do not include passwords, OTPs, bank credentials, Aadhaar or PAN numbers.</p>
           <label htmlFor="complaint" className="mt-5 block text-sm font-medium text-gray-800">What happened?</label>
-          <textarea id="complaint" maxLength={3000} value={complaint} onChange={(event) => setComplaint(event.target.value)} placeholder="Example: My speed post has not been delivered for 10 days..." className="mt-2 min-h-40 w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100" />
+          <textarea id="complaint" maxLength={3000} value={complaint} onChange={(event) => { setComplaint(event.target.value); if (savedRecord) setSaved(false); }} placeholder="Example: My speed post has not been delivered for 10 days..." className="mt-2 min-h-40 w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100" />
           <p className="mt-1 text-right text-xs text-slate-500">{complaint.length}/3000</p>
           <button type="button" onClick={() => analyzeComplaint()} disabled={loading || !complaint.trim()} className="mt-3 cursor-pointer rounded-xl bg-blue-900 px-6 py-3 font-medium text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">
             {loading ? "Preparing your grievance..." : "Continue"}
           </button>
           {assistanceError && <p role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">{assistanceError}</p>}
+          {duplicateError && <p role="status" className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">{duplicateError}</p>}
 
           {result?.missing_information?.length > 0 && !clarificationResolved && (
             <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
               <h3 className="font-semibold text-blue-950">One more detail may help</h3>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-blue-900">{result.missing_information.map((question) => <li key={question}>{question}</li>)}</ul>
               <label htmlFor="clarification" className="mt-4 block text-sm font-medium text-blue-950">Additional details</label>
-              <textarea id="clarification" value={clarification} onChange={(event) => setClarification(event.target.value)} className="mt-2 min-h-24 w-full rounded-lg border border-blue-200 p-3 outline-none focus:border-blue-700" placeholder="Add what you know. If a reference number is unavailable, you can say so." />
+              <textarea id="clarification" value={clarification} onChange={(event) => { setClarification(event.target.value); if (savedRecord) setSaved(false); }} className="mt-2 min-h-24 w-full rounded-lg border border-blue-200 p-3 outline-none focus:border-blue-700" placeholder="Add what you know. If a reference number is unavailable, you can say so." />
               <div className="mt-3 flex flex-wrap gap-3">
                 <button type="button" onClick={submitClarification} disabled={loading || !clarification.trim()} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">Continue with details</button>
                 <button type="button" onClick={() => setClarificationResolved(true)} className="cursor-pointer rounded-lg border border-blue-300 px-4 py-2 text-sm font-semibold text-blue-900">Continue without them</button>
@@ -431,16 +523,17 @@ function App() {
               </div>
               <textarea id="prepared-grievance" readOnly={!editing} value={rewritten} onChange={(event) => { setRewritten(event.target.value); setSaved(false); }} className={`mt-2 min-h-36 w-full rounded-lg border p-3 leading-relaxed outline-none ${editing ? "border-blue-500 ring-2 ring-blue-100" : "border-slate-200 bg-slate-50"}`} />
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <button type="button" onClick={copyGrievance} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 active:scale-95">Copy Grievance</button>
-                <button type="button" onClick={handleSubmit} disabled={saving || submitting || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Submitting..." : submission ? "Submitted" : "Submit Grievance"}</button>
+                <button type="button" onClick={handleSubmit} disabled={saving || submitting || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-blue-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60">{submitting ? "Submitting..." : submission ? "Submitted" : "Submit Grievance"}</button>
+                <button type="button" onClick={copyGrievance} className="cursor-pointer rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 active:scale-95">Copy Grievance</button>
               </div>
               {isDemo ? (
                 <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900">Demo Mode · Synthetic Data · Simulated Submission. Kept only for this browser session.</p>
               ) : (
                 <div className="mt-4">
-                  <button type="button" onClick={handleSave} disabled={saving || submitting || saved || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-60">
+                  <button type="button" onClick={handleSave} disabled={saving || submitting || saved || Boolean(submission) || !rewritten.trim()} className="cursor-pointer rounded-lg border border-blue-900 px-4 py-2 text-sm font-semibold text-blue-900 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-60">
                     {saving ? "Saving..." : saved ? "Saved" : "Save Draft"}
                   </button>
+                  {savedRecord && !saved && <p role="status" className="mt-2 text-sm font-medium text-amber-800">You have unsaved changes.</p>}
                   <p className="mt-2 text-sm font-medium text-slate-700">Saved drafts are not submitted to CPGRAMS.</p>
                   {saveError && <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">Unable to save grievance: {saveError}</p>}
                 </div>
@@ -453,7 +546,7 @@ function App() {
               </div>
             </div>
           )}
-        </section>
+        </section>}
         <footer className="mt-8 border-t border-slate-200 pt-5 text-xs leading-relaxed text-slate-500">
           Smart CPGRAM Assistant is an independent prototype and is not affiliated with or endorsed by the Government of India. Built with Codex.
         </footer>
